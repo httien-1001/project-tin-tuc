@@ -2,13 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Role;
-use App\Models\UserRole;
-use App\Models\User;
-
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-class UserController extends Controller
+
+class ManageCommentColler extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +13,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $data=User::simplePaginate(20);
-        return view('admin.user.index',compact('data'));
+        //
     }
 
     /**
@@ -61,9 +56,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $data = User::find($id);
-        $role = Role::all();
-        return view('admin.user.edit',compact('data','role'));
+        //
     }
 
     /**
@@ -73,18 +66,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, $id)
     {
-        $user->update($request->only('name','email'));
-        if(is_array($request->role)){
-            foreach($request->role as $role_id){
-                UserRole::create([
-                    'user_id'=>$user->id,
-                    'role_id'=>$role_id,]);
-
-            }
-        }
-        return redirect()->route('admin.user.index');
+        //
     }
 
     /**
@@ -95,11 +79,6 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        if($id==1){
-            return redirect()->route('admin.user.index')->with('toast_error', 'Cannot delete this user');
-        }
-        UserRole::where('user_id',$id)->delete();
-        User::where('id',$id)->delete();
-        return redirect()->route('admin.user.index')->with('toast_success', 'Delete User Successfully!');
+        //
     }
 }

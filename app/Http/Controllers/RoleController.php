@@ -48,7 +48,7 @@ class RoleController extends Controller
     {
         $route = json_encode($request->route);
         Role::create(['name'=> $request->name, 'permissions'=>$route]);
-        return redirect()->route('admin.role.index');
+        return redirect()->route('admin.role.index')->with('toast_success', 'Create Role Successfully!');
     }
 
     /**
@@ -70,7 +70,18 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        //
+
+        $routes = [];
+        foreach (Route::getRoutes() as $route){
+            $name = $route ->getName();
+            $check_include_admin = strpos($name,'admin');
+            $check_include_customer = strpos($name,'customer');
+            if($check_include_admin !== false || $check_include_customer !== false){
+                array_push($routes, $route->getName());
+            }
+        }
+
+        return view('admin.role.edit',compact('id','routes'));
     }
 
     /**
@@ -82,7 +93,8 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        return redirect()->route('admin.role.index')->with('toast_success', 'Update Role Successfully!');
     }
 
     /**
@@ -93,6 +105,10 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if($id==0 || $id ==1 ){
+            return redirect()->route('admin.role.index')->with('toast_error', 'Cannot delete this role');
+        }
+        Role::where('id',$id)->delete();
+            return redirect()->route('admin.role.index')->with('toast_success', 'Delete role successful');
     }
 }

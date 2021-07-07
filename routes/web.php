@@ -12,10 +12,8 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', function () {
 
-    return view('home');
-});
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Auth::routes();
 
@@ -24,10 +22,11 @@ Route::group(['prefix'=> 'admin','middleware' => 'auth', 'as' => 'admin.'],funct
     Route::resource('role', \App\Http\Controllers\RoleController::class);
     Route::resource('user', \App\Http\Controllers\UserController::class);
     Route::resource('post', \App\Http\Controllers\PostController::class);
+    Route::resource('comment', \App\Http\Controllers\ManageCommentColler::class);
 });
 
 Route::group(['prefix'=> 'customer','middleware' => 'auth', 'as' => 'customer.'],function(){
-
+    Route::resource('comment', \App\Http\Controllers\CommentController::class);
 });
 
 
