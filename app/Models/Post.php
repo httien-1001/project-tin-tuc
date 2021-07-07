@@ -13,4 +13,7 @@ class Post extends Model
     public function getAuthor(){
         return $this->belongsTo(User::class,'user_id','id');
     }
+    public function getComments(){
+        return $this->hasMany(Comments::class);
+    }
 }

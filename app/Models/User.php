@@ -62,4 +62,12 @@ class User extends Authenticatable
     public function getRoles(){
         return $this->belongsToMany('\App\Models\Role','users_roles','user_id','role_id');
     }
+    public function getRoleName(){
+        $array_role_name=[];
+        foreach ($this->getRoles as $role) {
+            echo $role->name;
+        }
+        return $array_role_name;
+    }
+
 }

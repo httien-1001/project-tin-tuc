@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PostRequest;
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
-use MongoDB\Driver\Session;
-
+use Illuminate\Support\Facades\Auth;
+use App\Models\UserRole;
 class PostController extends Controller
 {
     /**
@@ -14,10 +15,13 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
-        $data=Post::simplePaginate(50);
+        $user_id=Auth::id();
+        $data=Post::where('user_id',$user_id)->simplePaginate(50);
         return view('admin.post.index',compact('data'));
+
     }
 
     /**
@@ -36,23 +40,20 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PostRequest $request)
+    public function store(Request $request)
     {
+
         /*$validator = Validator::make($request->all(), [
                 'post_title' => 'required',
                 'post_content' => 'required',
                 'file' => 'required|image|mimes:jpeg,png,jpg|max:2048',
             ]
         );*/
-        if ($request->file('cover_image')->isValid()){
+        if ($request->file('cover_image')){
             $file_name = $request->file('cover_image')->getClientOriginalName();
             $request->file('cover_image')->move(public_path('/uploads'),$file_name);
         }
 
-        /*if ($validator->fails()) {
-            return back()->with('errors', $validator->messages()->all()[0])->withInput();
-
-        }*/
         $flag=Post::create([
             'user_id'=> $request->user_id,
             'title'=> $request->post_title,
@@ -73,7 +74,8 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+
+
     }
 
     /**
@@ -84,7 +86,11 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = Post::find($id);
+        if(Auth::id()==$data->user_id){
+            return view('admin.post.edit',compact('data'));
+        }
+        return abort('403');
     }
 
     /**
@@ -96,7 +102,19 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if ($request->file('cover_image')->isValid()){
+            $file_name = $request->file('cover_image')->getClientOriginalName();
+            $request->file('cover_image')->move(public_path('/uploads'),$file_name);
+        }
+        $flag=Post::where('id',$id)->update([
+            'user_id'=> $request->user_id,
+            'title'=> $request->post_title,
+            'content'=> $request->post_content,
+            'cover_image' => $file_name
+        ]);
+        if($flag){
+            return redirect()->route('admin.post.index')->with('toast_success', 'Update Post Successfully!');
+        }
     }
 
     /**
@@ -107,6 +125,7 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Post::where('id',$id)->delete();
+        return redirect()->route('admin.post.index')->with('toast_success', 'Delete Post Successfully!');
     }
 }
