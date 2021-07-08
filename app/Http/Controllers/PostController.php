@@ -18,8 +18,12 @@ class PostController extends Controller
 
     public function index()
     {
-        $user_id=Auth::id();
-        $data=Post::where('user_id',$user_id)->simplePaginate(50);
+
+        if(Auth::user()->isAdmin()){
+            $data=Post::all();
+        } else {
+            $data=Post::where('user_id',Auth::id())->get();
+        }
         return view('admin.post.index',compact('data'));
 
     }
@@ -42,18 +46,10 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-
-        /*$validator = Validator::make($request->all(), [
-                'post_title' => 'required',
-                'post_content' => 'required',
-                'file' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-            ]
-        );*/
         if ($request->file('cover_image')){
             $file_name = $request->file('cover_image')->getClientOriginalName();
             $request->file('cover_image')->move(public_path('/uploads'),$file_name);
         }
-
         $flag=Post::create([
             'user_id'=> $request->user_id,
             'title'=> $request->post_title,
@@ -74,6 +70,8 @@ class PostController extends Controller
      */
     public function show($id)
     {
+        $post_id=$id;
+        return view('admin.post.index',compact('post_id'));
 
 
     }

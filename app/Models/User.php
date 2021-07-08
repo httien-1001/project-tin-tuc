@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Role;
+use Illuminate\Support\Facades\Auth;
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
@@ -62,12 +63,16 @@ class User extends Authenticatable
     public function getRoles(){
         return $this->belongsToMany('\App\Models\Role','users_roles','user_id','role_id');
     }
-    public function getRoleName(){
-        $array_role_name=[];
-        foreach ($this->getRoles as $role) {
-            echo $role->name;
+
+    public function isAdmin(){
+        $array_admin=['Admin','Super Admin'];
+        $permission=Auth::user()->getRoles->pluck('name')->toArray();
+        foreach ($permission as $p){
+            if(in_array($p,$array_admin)){
+                return true;
+            }
         }
-        return $array_role_name;
+        return false;
     }
 
 }

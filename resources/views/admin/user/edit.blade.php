@@ -1,14 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Bootstrap Example</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-</head>
-<body>
+@extends('layouts.master')
+
+@section('content')
 
 <div class="container">
     <h2>Edit for user {{$data->name}}</h2>
@@ -26,12 +18,11 @@
 
         <div class="form-group">
             @foreach($role as $r)
-            <input type="checkbox" name="role[]" value="{{$r->id}}"> {{$r->name}}
+            <input type="checkbox" {{in_array($r->name,$already_role) ? 'checked' : ''}}  name="role[]" value="{{$r->id}}"> {{$r->name}}
             @endforeach
         </div>
-        <button type="submit" class="btn btn-default">Submit</button>
+        <button type="submit" class="btn btn-success">Submit</button>
+        <a class="btn btn-outline-info" href="{{route('admin.user.index')}}" >Cancel</a>
     </form>
 </div>
-
-</body>
-</html>
+ @endsection

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comments;
+use App\Models\Post;
 use Illuminate\Http\Request;
 
 class ManageCommentColler extends Controller
@@ -13,7 +15,9 @@ class ManageCommentColler extends Controller
      */
     public function index()
     {
-        //
+        $posts=Post::all();
+        $comments=Comments::all();
+        return view('admin.comment.index',compact('posts','comments'));
     }
 
     /**
@@ -79,6 +83,7 @@ class ManageCommentColler extends Controller
      */
     public function destroy($id)
     {
-        //
+        Comments::where('id',$id)->delete();
+        return redirect()->route('admin.post.index')->with('toast_success', 'Delete Comment Successfully!');
     }
 }
