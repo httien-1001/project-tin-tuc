@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Post;
 use App\Models\Role;
 use App\Models\UserRole;
 use App\Models\User;
@@ -77,10 +77,12 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        UserRole::where('user_id',$user->id)->delete();
         $user->update($request->only('name','email'));
+
         if(is_array($request->role)){
             foreach($request->role as $role_id){
-                UserRole::where('user_id',$user->id)->delete();
+//                UserRole::where('user_id',$user->id)->delete();
                 UserRole::create([
                     'user_id'=>$user->id,
                     'role_id'=>$role_id,]);
@@ -97,6 +99,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        Post::where('user_id',$id)->delete();
         UserRole::where('user_id',$id)->delete();
         User::where('id',$id)->delete();
         return redirect()->route('admin.user.index')->with('toast_success', 'Delete User Successfully!');

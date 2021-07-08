@@ -50,6 +50,16 @@
                                                             Create at: {{$cmt->created_at}}
                                                             </span>
                                                             <p>{{$cmt->content}}</p>
+                                                            <p>{{$cmt->getCommenter->name}}</p>
+                                                            @if(Auth::id()==$cmt->getCommenter->id)
+                                                                <form action="{{route('customer.comment.destroy',['comment'=>$cmt->id])}}" class="form" method="post">
+                                                                    @csrf
+                                                                    @method('delete')
+                                                                    <button type="submit"class="btn btn-xs btn-danger my-1">
+                                                                        <i class="far fa-trash-alt"></i>
+                                                                    </button>
+                                                                </form>
+                                                            @endif
                                                         </div>
                                                     </div>
                                                 @endforeach

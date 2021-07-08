@@ -55,7 +55,7 @@ class CommentController extends Controller
      */
     public function show($id)
     {
-        //
+        dd($id);
     }
 
     /**
@@ -89,6 +89,9 @@ class CommentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $flag=Comments::where('id',$id)->delete();
+        if($flag){
+            return redirect()->route('home')->with('toast_success','Delete Comment Successful');
+        }
     }
 }

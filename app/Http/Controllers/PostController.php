@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PostRequest;
+use App\Models\Comments;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -20,11 +21,11 @@ class PostController extends Controller
     {
 
         if(Auth::user()->isAdmin()){
-            $data=Post::all();
+            $posts=Post::all();
         } else {
-            $data=Post::where('user_id',Auth::id())->get();
+            $posts=Post::where('user_id',Auth::id())->get();
         }
-        return view('admin.post.index',compact('data'));
+        return view('admin.post.index',compact('posts'));
 
     }
 
@@ -72,8 +73,6 @@ class PostController extends Controller
     {
         $post_id=$id;
         return view('admin.post.index',compact('post_id'));
-
-
     }
 
     /**
