@@ -28,7 +28,7 @@
             <a class="btn btn-sm btn-danger my-2" href="{{route('admin.post.create')}}">Add new</a>
         @endif
         @if(count((is_countable($posts)?$posts:[]))>0)
-            <table class="table table-striped table-responsive">
+            <table class="table table-striped table-responsive  table-responsive-md">
                 <thead>
                 <tr>
                     <th>ID</th>
@@ -123,7 +123,7 @@
             </table>
 {{--            {{$data->links()}}--}}
         @else
-            <h3>You have no post</h3>
+            <h3>You have no post </h3>
             @endif
             </h1>
     </div>

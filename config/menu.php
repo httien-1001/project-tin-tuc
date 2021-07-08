@@ -12,9 +12,9 @@ return [
         'label' => 'Post',
         'route' => 'admin.post.index',
     ],
-//    [
-//        'label' => 'Comment',
-//        'route' => 'admin.comment.index',
-//    ],
+    [
+        'label' => 'Comment',
+        'route' => 'admin.comment.index',
+    ],
 ];
 ?>
