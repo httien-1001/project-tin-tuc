@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PostRequest;
+use App\Models\Comments;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -20,11 +21,11 @@ class PostController extends Controller
     {
 
         if(Auth::user()->isAdmin()){
-            $data=Post::all();
+            $posts=Post::all();
         } else {
-            $data=Post::where('user_id',Auth::id())->get();
+            $posts=Post::where('user_id',Auth::id())->get();
         }
-        return view('admin.post.index',compact('data'));
+        return view('admin.post.index',compact('posts'));
 
     }
 
@@ -44,7 +45,7 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
         if ($request->file('cover_image')){
             $file_name = $request->file('cover_image')->getClientOriginalName();
@@ -72,8 +73,6 @@ class PostController extends Controller
     {
         $post_id=$id;
         return view('admin.post.index',compact('post_id'));
-
-
     }
 
     /**
@@ -100,15 +99,15 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if ($request->file('cover_image')->isValid()){
+        /*if ($request->file('cover_image')->isValid()){
             $file_name = $request->file('cover_image')->getClientOriginalName();
             $request->file('cover_image')->move(public_path('/uploads'),$file_name);
-        }
+        }*/
         $flag=Post::where('id',$id)->update([
             'user_id'=> $request->user_id,
             'title'=> $request->post_title,
             'content'=> $request->post_content,
-            'cover_image' => $file_name
+            /*'cover_image' => $file_name*/
         ]);
         if($flag){
             return redirect()->route('admin.post.index')->with('toast_success', 'Update Post Successfully!');

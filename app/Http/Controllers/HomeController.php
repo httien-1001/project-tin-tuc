@@ -27,7 +27,7 @@ class HomeController extends Controller
     public function index()
     {
         $data=Post::all();
-
+        $comments = Comments::all();
         return view('home',compact('data'));
     }
 

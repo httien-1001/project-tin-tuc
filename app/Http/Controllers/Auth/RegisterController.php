@@ -63,7 +63,7 @@ class RegisterController extends Controller
          if($data){
             UserRole::create([
                 "user_id" => $data->id,
-                "role_id" => 6
+                "role_id" => 3
             ]);
          }
          return $data;

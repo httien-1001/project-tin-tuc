@@ -4,13 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Comments extends Model
 {
-    use HasFactory;
-    protected $table="comments";
-    protected $fillable=["post_id","user_id","content"];
+    use HasFactory,SoftDeletes;
+    protected $table="comment";
+    protected $fillable=["post_id","user_id","content","deleted_at"];
     public function getPost(){
         return $this->belongsTo(Post::class,'post_id','id');
+    }
+    public function getCommenter(){
+        return $this->belongsTo(User::class,'user_id','id');
     }
 }

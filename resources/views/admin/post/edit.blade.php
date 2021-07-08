@@ -10,14 +10,21 @@
             <div class="form-group">
                 <label for="name">Title:</label>
                 <input type="text" class="form-control" id="name" name="post_title" value="{{$data->title}}">
+                @error('post_title')
+                <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
             </div>
             <div class="form-group">
                 <label for="name">Cover Image:</label>
+                <img  src="../../../public/uploads/{{ $data->cover_image}}" style="width: 200px;">
                 <input type="file" class="form-control" id="name" name="cover_image" placeholder="Choose file">
             </div>
             <div class="form-group">
                 <label for="name">Content:</label>
-                <textarea name="post_content" value="{{$data->content}}"></textarea>
+                <textarea name="post_content" >{{$data->content}}</textarea>
+                @error('post_content')
+                <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
             </div>
             <button type="submit" class="btn btn-success">Submit</button>
             <a clas="btn btn-outline-danger"href="{{route('admin.post.index')}}">Cancel</a>
