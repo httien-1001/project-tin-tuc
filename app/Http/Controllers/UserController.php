@@ -17,8 +17,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        $data=User::simplePaginate(20);
-        return view('admin.user.index',compact('data'));
+        $data=User::where('id', '!=', 1)->get();
+        $roles = Role::where('id', '!=', 1)->get();
+        return view('admin.user.index',compact('data','roles'));
     }
 
     /**
@@ -59,11 +60,12 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        $data = User::find($id);
-        $role = Role::all();
-        return view('admin.user.edit',compact('data','role'));
+        $already_role=$user->getRoles()->pluck('name','id')->toArray();
+        $data = User::find($user->id);
+        $role = Role::where('id', '!=', 1)->get();
+        return view('admin.user.edit',compact('data','role','already_role'));
     }
 
     /**
@@ -78,13 +80,13 @@ class UserController extends Controller
         $user->update($request->only('name','email'));
         if(is_array($request->role)){
             foreach($request->role as $role_id){
+                UserRole::where('user_id',$user->id)->delete();
                 UserRole::create([
                     'user_id'=>$user->id,
                     'role_id'=>$role_id,]);
-
             }
         }
-        return redirect()->route('admin.user.index');
+        return redirect()->route('admin.user.index')->with('toast_success', 'Update Permissions Successfully!');
     }
 
     /**
@@ -95,9 +97,6 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        if($id==1){
-            return redirect()->route('admin.user.index')->with('toast_error', 'Cannot delete this user');
-        }
         UserRole::where('user_id',$id)->delete();
         User::where('id',$id)->delete();
         return redirect()->route('admin.user.index')->with('toast_success', 'Delete User Successfully!');

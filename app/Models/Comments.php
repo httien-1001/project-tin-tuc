@@ -13,8 +13,4 @@ class Comments extends Model
     public function getPost(){
         return $this->belongsTo(Post::class,'post_id','id');
     }
-    public function getUserName(){
-        return $this -> belongsTo(Post::class,'user_id','id');
-    }
-
 }
