@@ -19,7 +19,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $data=User::where('id', '!=', 1)->get();
+        $data=User::where('id', '!=', 1)->paginate(30);
         $roles = Role::where('id', '!=', 1)->get();
         return view('admin.user.index',compact('data','roles'));
     }

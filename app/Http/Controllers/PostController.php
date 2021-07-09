@@ -21,9 +21,9 @@ class PostController extends Controller
     {
 
         if(Auth::user()->isAdmin()){
-            $posts=Post::all();
+            $posts=Post::paginate(10);
         } else {
-            $posts=Post::where('user_id',Auth::id())->get();
+            $posts=Post::where('user_id',Auth::id())->paginate(10);
         }
         return view('admin.post.index',compact('posts'));
 
@@ -47,26 +47,32 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-        ]);
+        if($request->hasFile('profile_image')){
+            //Hàm kiểm tra dữ liệu
+            $this->validate($request,
+                [
 
-        // ensure the request has a file before we attempt anything else.
-        if ($request->hasFile('file')) {
-            $request->validate([
-                'image' => 'mimes:jpeg,bmp,png' // Only allow .jpg, .bmp and .png file types.
-            ]);
-            // Save the file locally in the storage/public/ folder under a new folder named /product
-            $request->file->store('uploads', 'public');
-            // Store the record, using the new file hashname which will be it's new filename identity.
+                    'profile_image' => 'mimes:jpg,jpeg,png,gif|max:2048',
+                ],
+                [
+
+                    'profile_image.mimes' => 'Only accept file type .jpg .jpeg .png .gif',
+                    'profile_image.max' => 'Size of picture must smaller than 2MB',
+                ]
+            );
+
+            $profile_image = $request->file('profile_image');
+            $profile_name=time().'_'.$profile_image->getClientOriginalName();
+            $destinationPath = public_path('uploads');
+            $profile_image->move($destinationPath, $profile_name);
+        }
             $flag = Post::create([
                 'user_id'=> $request->user_id,
                 'title'=> $request->post_title,
                 'content'=> $request->post_content,
-                'cover_image' => $request->file->hashName(),
-//                "file_path" => $request->file->hashName()
+                'cover_image' => $profile_name
             ]);
-        }
+
         if($flag){
             return redirect()->route('admin.post.index')->with('toast_success', 'New Post Created Successfully!');
         }
@@ -109,18 +115,28 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        /*if ($request->file('cover_image')->isValid()){
-            $file_name = $request->file('cover_image')->getClientOriginalName();
-            $request->file('cover_image')->move(public_path('/uploads'),$file_name);
-        }*/
-        $flag=Post::where('id',$id)->update([
+        $old_file = Post::where('id',$id)->get()->pluck('cover_image');
+        if($old_file[0] != null && file_exists(public_path('uploads/'.$old_file))){
+            unlink(public_path('uploads/'.$old_file));
+        }
+        if($request->hasFile('cover_image')){
+            $profile_image = $request->file('cover_image');
+            $profile_name=time().'_'.$profile_image->getClientOriginalName();
+            $destinationPath = public_path('uploads');
+            $profile_image->move($destinationPath, $profile_name);
+            $flag=Post::where('id',$id)->update([
+                'cover_image' => $profile_name]);
+        }
+        $flag_1=Post::where('id',$id)->update([
             'user_id'=> $request->user_id,
             'title'=> $request->post_title,
             'content'=> $request->post_content,
-            /*'cover_image' => $file_name*/
         ]);
-        if($flag){
+        if($flag || $flag_1){
             return redirect()->route('admin.post.index')->with('toast_success', 'Update Post Successfully!');
+        } else {
+            return redirect()->route('admin.post.index')->with('toast_success', 'Error Occurs');
+
         }
     }
 

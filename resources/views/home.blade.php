@@ -11,16 +11,16 @@
                 <div class="col-md-6">
                     <div class="card flex-md-row mb-4 box-shadow h-md-250">
                         <div class="card-body d-flex flex-column align-items-start">
-                            <h4 class="mb-0" id="title">
+                            <h4 class="mb-0" >
                                 <b>
                                 {{$d->title}}
                                 </b>
                             </h4>
                             <div class="mb-1 text-muted mb-4">{{$d->updated_at}}</div>
-                            <div class="card-text mb-auto text-content" id="content">{!! $d->content !!}</div>
+                            <div class="card-text mb-auto text-content" ></div>
                             <a class="btn-outline-default" data-toggle="modal" href='#modal-id{{$d->id}}'>Read more</a>
-                            <div class="modal fade" id="modal-id{{$d->id}}">
-                                <div class="modal-dialog">
+                            <div class="modal fade " id="modal-id{{$d->id}}">
+                                <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h4 class="modal-title">{{$d->title}}</h4>
@@ -28,7 +28,6 @@
                                         </div>
                                         <div class="modal-body">
                                             <div class="text-center mb-2">
-                                                <img class="" style="width: 100%; height: 300px; object-fit: cover"  src="public/uploads/{{ $d->cover_image}}" >
                                             </div>
                                             {!! $d->content !!}
                                             <hr>
@@ -99,32 +98,12 @@
                     </div>
                 </div>
             @endforeach
+
+        </div>
+        <div  class="d-flex justify-content-center">
+            {!! $data->links() !!}
         </div>
     </div>
 @endsection
 @section('js')
-    <script>
-        var characterNumber = $("#title").text().length;
-        console.log(name);
-        if (characterNumber > 100) {
-            var shortName =  $("#title").text().substring(0, 100) + " ...";
-            var newTitle=shortName.bold();
-            $("#title").replaceWith(newTitle);
-
-        }
-        var characterNumber = $("#content").text().length;
-        console.log(name);
-        if(window.matchMedia("(max-width: 700px)")){
-            if (characterNumber > 120) {
-                var shortName =  $("#content").text().substring(0, 120) + " ...";
-                $("#content").replaceWith(shortName);
-            }
-        } else {
-            if (characterNumber > 200) {
-                var shortName =  $("#content").text().substring(0, 200) + " ...";
-                $("#content").replaceWith(shortName);
-            }
-        }
-
-    </script>
 @endsection

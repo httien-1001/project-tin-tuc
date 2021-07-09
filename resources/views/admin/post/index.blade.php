@@ -1,24 +1,6 @@
 @extends('layouts.master')
 @section('styles')
     <style>
-        @media (min-width: 768px) {
-            .modal-dialog {
-                width: 600px;
-                margin: 30px auto;
-            }
-        }
-
-        @media (min-width: 768px) {
-            .modal-xl {
-                width: 50%;
-                max-width:1200px;
-            }
-        }
-        @media (min-width: 992px) {
-            .modal-lg {
-                width: 900px;
-            }
-        }
     </style>
 @endsection
 @section('content')
@@ -31,7 +13,8 @@
             <table class="table table-striped table-responsive  table-responsive-md">
                 <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>STT</th>
+                    <th>Code</th>
                     <th>Title</th>
                     <th >Author</th>
                     <th >Cover Image</th>
@@ -40,9 +23,11 @@
                 </tr>
                 </thead>
                 <tbody>
+                <?php $count=1?>
                 @foreach($posts as $result)
                     <tr >
-                        <td style=" vertical-align: middle;">{{$result->id}}</td>
+                        <td style=" vertical-align: middle;">{{$count++}}</td>
+                        <td style=" vertical-align: middle;">NWS.{{$result->id}}</td>
                         <td style=" vertical-align: middle;">{{$result->title}}</td>
                         <td style=" vertical-align: middle;">{{$result->getAuthor->name}}</td>
                         <td style=" vertical-align: middle;">
@@ -50,13 +35,16 @@
                         </td>
                         <td style=" vertical-align: middle;">{{$result->updated_at}}</td>
                         <td style="display: flex">
+                            @if(Auth::user()->can('admin.comment.index'))
                             <button type="button" class="btn btn-xs btn-primary mr-2" data-toggle="modal" data-target="#myModal{{$result->id}}"><i class="far fa-comment-alt"></i></button>
-                            <div class="modal" id="myModal{{$result->id}}">
-                                <div class="modal-dialog modal-xl">
+<!--                            modal comment for each post-->
+                            @endif
+                                <div class="modal" id="myModal{{$result->id}}">
+                                <div class="modal-dialog modal-lg">
                                     <div class="modal-content ">
                                         <!-- Modal Header -->
                                         <div class="modal-header">
-                                            <h3 class="modal-title">Comment of post {{$result->id}}</h3>
+                                            <h3 class="modal-title">Comment of post "{{$result->title}}"</h3>
                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                                         </div>
                                         <!-- Modal body -->
@@ -65,6 +53,7 @@
                                             <table  class="table table-striped table-responsive">
                                                 <thead>
                                                 <tr>
+                                                    <th>STT</th>
                                                     <th>ID</th>
                                                     <th>Content</th>
                                                     <th >Commenter</th>
@@ -73,9 +62,11 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
+                                                <?php $key=1 ?>
                                                 @foreach($result->getComments as $cmt)
                                                     <tr>
-                                                        <td>{{$cmt->id}}</td>
+                                                        <td>{{$key++}}</td>
+                                                        <td>CMT.{{$cmt->id}}</td>
                                                         <td>{{$cmt->content}}</td>
                                                         <td>{{$cmt->getCommenter->name}}</td>
                                                         <td>{{$cmt->created_at}}</td>
@@ -105,6 +96,7 @@
                                     </div>
                                 </div>
                             </div>
+{{--                            end--}}
                             <a class="btn btn-xs btn-warning" href="{{route('admin.post.edit',['post'=> $result->id])}}"><i class="far fa-edit"></i></a>
                             <form action="{{route('admin.post.destroy',$result->id)}}" class="form"
                                   method="post">
@@ -117,11 +109,12 @@
                             </form>
                         </td>
                     </tr>
-
                 @endforeach
                 </tbody>
             </table>
-{{--            {{$data->links()}}--}}
+            <div  class="d-flex justify-content-center">
+                {!! $posts->links() !!}
+            </div>
         @else
             <h3>You have no post </h3>
             @endif

@@ -4,11 +4,11 @@
 @section('content')
     <div class="container">
         <h2>Comments</h2>
-        @if(count((is_countable($posts)?$posts:[]))>0)
+        @if(count((is_countable($comments)?$comments:[]))>0)
             <table class="table table-striped table-responsive">
                 <thead>
                 <tr >
-                    <th>ID</th>
+                    <th>STT</th>
                     <th>Post title</th>
                     <th >Comment content</th>
                     <th >By user</th>
@@ -18,9 +18,10 @@
                 </tr>
                 </thead>
                 <tbody>
+                <?php $key=1 ?>
                 @foreach($comments as $cmt)
                     <tr >
-                        <td style=" vertical-align: middle;">{{$cmt->id}}</td>
+                        <td style=" vertical-align: middle;">{{$key++}}</td>
                         <td style=" vertical-align: middle;">{{$cmt->getPost->title}}</td>
                         <td style=" vertical-align: middle;">{{$cmt->content}}</td>
                         <td style=" vertical-align: middle;">{{$cmt->getCommenter->name}}</td>
@@ -55,6 +56,9 @@
                 @endforeach
                 </tbody>
             </table>
+            <div  class="d-flex justify-content-center">
+                {!! $comments->links() !!}
+            </div>
         @else
         <h3>This page has no comment</h3>
         @endif
