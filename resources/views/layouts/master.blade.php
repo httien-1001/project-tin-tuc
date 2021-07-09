@@ -17,27 +17,34 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" integrity="sha512-RXf+QSDCUQs5uwRKaDoXt55jygZZm2V++WUZduaU/Ui/9EGp3f/2KZVahFZBKGH0s774sd3HmrhUy+SgOFQLVQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
-<ul class="navbar-nav ml-auto">
-    <!-- Authentication Links -->
-    @guest
-        <nav class="navbar navbar-expand-sm bg-light navbar-light">
+@guest
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Vnexpress</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            @if (Route::has('login') || Route::has('register'))
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                </li>
+            @endif
+        </ul>
+    </div>
+</nav>
+@else
+    <?php $menu = config('menu'); ?>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Vnexpress</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
-                @if (Route::has('login') || Route::has('register'))
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                    </li>
-                @endif
-            </ul>
-        </nav>
-
-    @else
-        <?php $menu = config('menu'); ?>
-        <nav class="navbar navbar-expand-sm bg-light navbar-light">
-            <ul class="navbar-nav">
-
                 @foreach($menu as $m)
                     @if(Auth::user()->can($m['route']))
                         <li class="nav-item active">
@@ -46,10 +53,8 @@
                     @endif
                 @endforeach
                 <li class="nav-item">
-
                     <a class="nav-link"  href="{{ route('logout') }}"
-                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                       onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                         {{ __('Logout') }}
                     </a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -57,14 +62,14 @@
                     </form>
                 </li>
             </ul>
-        </nav>
-    @endguest
-</ul>
-    <main class="py-4">
-        @yield('content')
-    </main>
-    @yield('js')
-    @include('sweetalert::alert')
+        </div>
+    </nav>
+@endguest
+<main class="py-4">
+    @yield('content')
+</main>
+@yield('js')
+@include('sweetalert::alert')
 </body>
 </html>
 

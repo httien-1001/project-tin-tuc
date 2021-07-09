@@ -45,7 +45,7 @@
 {{--        end modal permission    --}}
 {{--        table user--}}
         @if(count((is_countable($data)?$data:[]))>0)
-            <table class="table table-striped table-">
+            <table class="table table-striped table-responsive-md">
                 <thead>
                 <tr>
                     <th  style=" vertical-align: middle;">ID</th>

@@ -16,8 +16,9 @@ class ManageCommentColler extends Controller
     public function index()
     {
         $posts=Post::all();
-        $comments=Comments::all();
-        return view('admin.comment.index',compact('posts','comments'));
+        $comments=Comments::withTrashed()->get();
+        $comments_deleted=Comments::onlyTrashed()->get();
+        return view('admin.comment.index',compact('posts','comments','comments_deleted'));
     }
 
     /**
@@ -27,7 +28,7 @@ class ManageCommentColler extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -49,9 +50,9 @@ class ManageCommentColler extends Controller
      */
     public function show($id)
     {
-        //
+        Comments::withTrashed()->where('id',$id)->delete();
+        return redirect()->back()->with('toast_success', 'Hide Comment Successfully!');
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -60,7 +61,9 @@ class ManageCommentColler extends Controller
      */
     public function edit($id)
     {
-        //
+        Comments::withTrashed()->where('id',$id)->restore();
+        return redirect()->back()->with('toast_success', 'Restore Comment Successfully!');
+
     }
 
     /**
@@ -83,7 +86,7 @@ class ManageCommentColler extends Controller
      */
     public function destroy($id)
     {
-        Comments::where('id',$id)->delete();
-        return redirect()->route('admin.post.index')->with('toast_success', 'Delete Comment Successfully!');
+        Comments::where('id',$id)->forceDelete();
+        return redirect()->back()->with('toast_success', 'Delete Comment Successfully!');
     }
 }

@@ -45,22 +45,32 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PostRequest $request)
+    public function store(Request $request)
     {
-        if ($request->file('cover_image')){
-            $file_name = $request->file('cover_image')->getClientOriginalName();
-            $request->file('cover_image')->move(public_path('/uploads'),$file_name);
-        }
-        $flag=Post::create([
-            'user_id'=> $request->user_id,
-            'title'=> $request->post_title,
-            'content'=> $request->post_content,
-            'cover_image' => $file_name
+        $request->validate([
+            'name' => 'required',
         ]);
+
+        // ensure the request has a file before we attempt anything else.
+        if ($request->hasFile('file')) {
+            $request->validate([
+                'image' => 'mimes:jpeg,bmp,png' // Only allow .jpg, .bmp and .png file types.
+            ]);
+            // Save the file locally in the storage/public/ folder under a new folder named /product
+            $request->file->store('uploads', 'public');
+            // Store the record, using the new file hashname which will be it's new filename identity.
+            $flag = Post::create([
+                'user_id'=> $request->user_id,
+                'title'=> $request->post_title,
+                'content'=> $request->post_content,
+                'cover_image' => $request->file->hashName(),
+//                "file_path" => $request->file->hashName()
+            ]);
+        }
         if($flag){
             return redirect()->route('admin.post.index')->with('toast_success', 'New Post Created Successfully!');
         }
-        return redirect()->route('admin.post.index')->with('toast_error ', 'Error');
+        return redirect()->back()->with('toast_error ', 'Error');
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Http\Requests\CreateUserRequest;
+use App\Models\Comments;
 use App\Models\Post;
 use App\Models\Role;
 use App\Models\UserRole;
@@ -101,6 +102,7 @@ class UserController extends Controller
     public function destroy($id)
     {
         Post::where('user_id',$id)->delete();
+        Comments::where('user_id',$id)->forceDelete();
         UserRole::where('user_id',$id)->delete();
         User::where('id',$id)->delete();
         return redirect()->route('admin.user.index')->with('toast_success', 'Delete User Successfully!');
