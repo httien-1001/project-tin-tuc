@@ -3,10 +3,10 @@
 @section('content')
     <div class="container">
             <h2>Users table</h2>
-{{--        modal permission--}}
                 <button type="button" class="btn btn-primary my-2" data-toggle="modal" data-target="#exampleModal">
                     Permissions
                 </button>
+        {{--        modal permission--}}
                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
@@ -93,7 +93,10 @@
                 @endforeach
                 </tbody>
             </table>
-            @else
+            <div  class="d-flex justify-content-center">
+                {!! $data->links() !!}
+            </div>
+        @else
                 <h3>This page has no users.</h3>
             @endif
 {{--        end table user--}}

@@ -16,8 +16,8 @@ class ManageCommentColler extends Controller
     public function index()
     {
         $posts=Post::all();
-        $comments=Comments::withTrashed()->get();
-        $comments_deleted=Comments::onlyTrashed()->get();
+        $comments=Comments::withTrashed()->paginate(20);
+        $comments_deleted=Comments::onlyTrashed()->paginate(20);
         return view('admin.comment.index',compact('posts','comments','comments_deleted'));
     }
 

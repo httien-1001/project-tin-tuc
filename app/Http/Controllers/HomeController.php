@@ -26,8 +26,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $data=Post::all();
-        $comments = Comments::all();
+        $data=Post::paginate(10);
         return view('home',compact('data'));
     }
 

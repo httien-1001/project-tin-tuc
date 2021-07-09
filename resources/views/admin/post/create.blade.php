@@ -7,19 +7,19 @@
            @csrf
            <input type="hidden" class="form-control" name="user_id" value="{{Auth::id()}}">
            <div class="form-group">
-               <label for="name">Title:</label>
-               <input type="text" class="form-control" id="name" name="post_title" value="{{old('post_title')}}">
+               <label for="post_title">Title:</label>
+               <input type="text" class="form-control" id="post_title" name="post_title" value="{{old('post_title')}}">
 
            </div>
            <div class="form-group">
-               <label for="name">Cover Image:</label>
-               <input type="file" class="form-control" id="name" name="image" placeholder="Choose file" value="">
+               <label for="profile_image">Cover Image:</label>
+               <input type="file" class="form-control"  style="border: none" id="profile_image" name="profile_image" placeholder="Choose file" value="">
 
            </div>
            <div class="form-group">
-               <label for="name">Content:</label>
+               <label for="">Content:</label>
 <!--               <input type="text" class="form-control" id="name" name="name" placeholder="Enter name">-->
-               <textarea name="post_content" placeholder="Add content..." >{{old('post_content')}}</textarea>
+               <textarea name="post_content" placeholder="Add content..." id="editor">{{old('post_content')}}</textarea>
 
            </div>
            <button type="submit" class="btn btn-success">Submit</button>
@@ -30,5 +30,4 @@
 @endsection
 @section('js')
     <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
-    <script>tinymce.init({selector:'textarea'});</script>
 @endsection
