@@ -48,14 +48,11 @@ class PostController extends Controller
     public function store(Request $request)
     {
         if($request->hasFile('profile_image')){
-            //Hàm kiểm tra dữ liệu
             $this->validate($request,
                 [
-
                     'profile_image' => 'mimes:jpg,jpeg,png,gif|max:2048',
                 ],
                 [
-
                     'profile_image.mimes' => 'Only accept file type .jpg .jpeg .png .gif',
                     'profile_image.max' => 'Size of picture must smaller than 2MB',
                 ]
@@ -72,13 +69,11 @@ class PostController extends Controller
                 'content'=> $request->post_content,
                 'cover_image' => $profile_name
             ]);
-
         if($flag){
             return redirect()->route('admin.post.index')->with('toast_success', 'New Post Created Successfully!');
         }
         return redirect()->back()->with('toast_error ', 'Error');
     }
-
     /**
      * Display the specified resource.
      *
@@ -90,7 +85,6 @@ class PostController extends Controller
         $post_id=$id;
         return view('admin.post.index',compact('post_id'));
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -115,11 +109,11 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $old_file = Post::where('id',$id)->get()->pluck('cover_image');
-        if($old_file[0] != null && file_exists(public_path('uploads/'.$old_file))){
-            unlink(public_path('uploads/'.$old_file));
-        }
         if($request->hasFile('cover_image')){
+            $old_file = Post::where('id',$id)->get()->pluck('cover_image');
+            if($old_file[0] != null && file_exists(public_path('uploads/'.$old_file))){
+                unlink(public_path('uploads/'.$old_file));
+            }
             $profile_image = $request->file('cover_image');
             $profile_name=time().'_'.$profile_image->getClientOriginalName();
             $destinationPath = public_path('uploads');

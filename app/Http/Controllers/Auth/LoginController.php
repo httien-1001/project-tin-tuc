@@ -7,7 +7,9 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-
+use Illuminate\Mail\Mailable;
+use Mail;
+use Illuminate\Support\Facades\Auth;
 class LoginController extends Controller
 {
     /*
@@ -52,14 +54,17 @@ class LoginController extends Controller
     if (method_exists($this, 'hasTooManyLoginAttempts') &&
         $this->hasTooManyLoginAttempts($request)) {
         $this->fireLockoutEvent($request);
-
         return ;
     }
-
     if ($this->attemptLogin($request)) {
+        Mail::send('customer.mail',[
+        ],function($mail) use ($request){
+            $mail->to('ttien.1001.2000@gmail.com',Auth::user()->email);
+            $mail->from('tienht.vn@gmail.com');
+            $mail->subject('Loggin warning');
+        });
         return $this->sendLoginResponse($request);
     }
-
     // If the login attempt was unsuccessful we will increment the number of attempts
     // to login and redirect the user back to the login form. Of course, when this
     // user surpasses their maximum number of attempts they will get locked out.
@@ -71,5 +76,4 @@ public function showLoginForm()
 {
     return view('auth.login');
 }
-
 }

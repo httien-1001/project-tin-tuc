@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Role;
 use App\Models\UserRole;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Mail\Mailable;
 
 class RegisterController extends Controller
 {
@@ -60,10 +62,11 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+         $member_id=Role::where('name','Member')->first()->id;
          if($data){
             UserRole::create([
                 "user_id" => $data->id,
-                "role_id" => 3
+                "role_id" => $member_id
             ]);
          }
          return $data;
