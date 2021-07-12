@@ -14,6 +14,7 @@ class RolesTableSeeder extends Seeder
      */
     public function run()
     {
+
         $routes_admin = [];
         foreach (Route::getRoutes() as $route){
             $name = $route ->getName();
