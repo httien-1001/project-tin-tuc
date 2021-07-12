@@ -6,6 +6,20 @@
        <form role="form" method="POST" action="{{route('admin.post.store')}}" enctype="multipart/form-data">
            @csrf
            <input type="hidden" class="form-control" name="user_id" value="{{Auth::id()}}">
+
+           @if ($errors->any())
+               <div class="alert alert-danger alert-dismissible" role="alert">
+                   <ul>
+                       @foreach ($errors->all() as $error)
+                           <li>{{ $error }}</li>
+                       @endforeach
+                   </ul>
+                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                       <span aria-hidden="true">&times;</span>
+                       <span class="sr-only">Close</span>
+                   </button>
+               </div>
+           @endif
            <div class="form-group">
                <label for="post_title">Title:</label>
                <input type="text" class="form-control" id="post_title" name="post_title" value="{{old('post_title')}}">
@@ -27,7 +41,4 @@
        </form>
    </div>
 
-@endsection
-@section('js')
-    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 @endsection

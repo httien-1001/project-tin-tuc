@@ -46,7 +46,20 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {$this->validate($request,
+        [
+            //Kiểm tra giá trị rỗng
+            'post_title' => 'required',
+            'post_content' => 'required',
+            'profile_image' => 'required'
+        ],
+        [
+            //Tùy chỉnh hiển thị thông báo
+            'post_title.required' => 'You must enter title',
+            'post_content.required' => 'You must enter content',
+            'profile_image.required' => 'You must choose cover picture for the post',
+        ]
+    );
         if($request->hasFile('profile_image')){
             $this->validate($request,
                 [
@@ -57,22 +70,20 @@ class PostController extends Controller
                     'profile_image.max' => 'Size of picture must smaller than 2MB',
                 ]
             );
-
             $profile_image = $request->file('profile_image');
             $profile_name=time().'_'.$profile_image->getClientOriginalName();
             $destinationPath = public_path('uploads');
             $profile_image->move($destinationPath, $profile_name);
-        }
             $flag = Post::create([
                 'user_id'=> $request->user_id,
                 'title'=> $request->post_title,
                 'content'=> $request->post_content,
                 'cover_image' => $profile_name
             ]);
-        if($flag){
-            return redirect()->route('admin.post.index')->with('toast_success', 'New Post Created Successfully!');
+            if($flag){
+                return redirect()->route('admin.post.index')->with('toast_success', 'New Post Created Successfully!');
+            }
         }
-        return redirect()->back()->with('toast_error ', 'Error');
     }
     /**
      * Display the specified resource.
@@ -118,7 +129,7 @@ class PostController extends Controller
             $profile_name=time().'_'.$profile_image->getClientOriginalName();
             $destinationPath = public_path('uploads');
             $profile_image->move($destinationPath, $profile_name);
-            $flag=Post::where('id',$id)->update([
+            Post::where('id',$id)->update([
                 'cover_image' => $profile_name]);
         }
         $flag_1=Post::where('id',$id)->update([
@@ -126,7 +137,7 @@ class PostController extends Controller
             'title'=> $request->post_title,
             'content'=> $request->post_content,
         ]);
-        if($flag || $flag_1){
+        if($flag_1){
             return redirect()->route('admin.post.index')->with('toast_success', 'Update Post Successfully!');
         } else {
             return redirect()->route('admin.post.index')->with('toast_success', 'Error Occurs');
