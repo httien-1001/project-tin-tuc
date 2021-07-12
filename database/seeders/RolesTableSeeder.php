@@ -28,9 +28,8 @@ class RolesTableSeeder extends Seeder
         $routes_reader = [];
         foreach (Route::getRoutes() as $route){
             $name = $route ->getName();
-            $check_include_admin = strpos($name,'admin');
             $check_include_customer = strpos($name,'customer');
-            if($check_include_admin !== false || $check_include_customer !== false){
+            if( $check_include_customer !== false){
                 array_push($routes_reader, $route->getName());
             }
         }
