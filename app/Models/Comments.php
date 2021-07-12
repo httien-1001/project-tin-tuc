@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Comments extends Model
 {
     use HasFactory,SoftDeletes;
-    protected $table="comment";
+    protected $table="comments";
     protected $fillable=["post_id","user_id","content","deleted_at"];
     public function getPost(){
         return $this->belongsTo(Post::class,'post_id','id');
