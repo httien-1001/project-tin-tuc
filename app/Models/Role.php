@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Role extends Model
 {
     use HasFactory;
-    protected $table = "roles";
-    protected $fillable = ['name','permissions'];
+    protected $fillable=['name'];
+    public function permissions()
+    {
+        return $this->belongsToMany('\App\Models\Permission','permissions_roles','role_id','permissions_id');
+    }
 }

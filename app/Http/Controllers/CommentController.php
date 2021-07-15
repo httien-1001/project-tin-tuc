@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Comments;
-use App\Models\Post;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
@@ -15,7 +13,7 @@ class CommentController extends Controller
      */
     public function index()
     {
-
+        //
     }
 
     /**
@@ -36,15 +34,7 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        $flag=Comments::create([
-            "user_id"=> $request->user_id,
-            "post_id"=> $request->post_id,
-            "content" => $request->comment_content
-        ]);
-        if($flag){
-            return redirect()->route('home')->with('toast_success', 'Add Comment Successfully!');
-        }
-
+        //
     }
 
     /**
@@ -55,6 +45,7 @@ class CommentController extends Controller
      */
     public function show($id)
     {
+        //
     }
 
     /**
@@ -88,9 +79,6 @@ class CommentController extends Controller
      */
     public function destroy($id)
     {
-        $flag=Comments::where('id',$id)->delete();
-        if($flag){
-            return redirect()->route('home')->with('toast_success','Delete Comment Successful');
-        }
+        //
     }
 }

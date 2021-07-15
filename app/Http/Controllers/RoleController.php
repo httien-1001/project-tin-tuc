@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Permission;
+use App\Models\PermissionRole;
 use App\Models\Role;
-use Illuminate\Support\Facades\Route;
+use App\Models\User;
+use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
@@ -15,8 +17,8 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $data = Role::simplePaginate(10);
-        return view('admin.role.index',compact('data'));
+        $roles = Role::all();
+        return view('admin.role.index',compact('roles'));
     }
 
     /**
@@ -26,16 +28,8 @@ class RoleController extends Controller
      */
     public function create()
     {
-        $routes = [];
-        foreach (Route::getRoutes() as $route){
-            $name = $route ->getName();
-            $check_include_admin = strpos($name,'admin');
-            $check_include_customer = strpos($name,'customer');
-            if($check_include_admin !== false || $check_include_customer !== false){
-                array_push($routes, $route->getName());
-            }
-        }
-        return view('admin.role.create',compact('routes'));
+        $permissions = Permission::all();
+        return view('admin.role.create',compact('permissions'));
     }
 
     /**
@@ -44,11 +38,30 @@ class RoleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,Role $role)
     {
-        $route = json_encode($request->route);
-        Role::create(['name'=> $request->name, 'permissions'=>$route]);
+
+        $rules= [
+            'role_name' => 'required|unique:roles,name',
+            'permissions'=>'required'
+        ];
+        $messages=[
+            'role_name.required' => 'You must enter name',
+            'role_name.unique' => 'Name already exists',
+            'permissions.required' => 'You must choose one',
+        ];
+        $request->validate($rules,$messages);
+        $permissions= $request->permissions;
+        $role_id=Role::create(['name'=> $request->role_name,])->id;
+        foreach ($permissions as $permission){
+            PermissionRole::create([
+                'role_id' => intval($role_id),
+                'permissions_id' => intval($permission),
+
+            ]);
+        }
         return redirect()->route('admin.role.index')->with('toast_success', 'Create Role Successfully!');
+
     }
 
     /**
@@ -59,7 +72,7 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-
+        //
     }
 
     /**
@@ -70,18 +83,10 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-
-        $routes = [];
-        foreach (Route::getRoutes() as $route){
-            $name = $route ->getName();
-            $check_include_admin = strpos($name,'admin');
-            $check_include_customer = strpos($name,'customer');
-            if($check_include_admin !== false || $check_include_customer !== false){
-                array_push($routes, $route->getName());
-            }
-        }
-
-        return view('admin.role.edit',compact('id','routes'));
+        $already_permissions = PermissionRole::where('role_id',$id)->pluck('permissions_id')->toArray();
+        $role=Role::where('id',$id)->first();
+        $permissions = Permission::all();
+        return view('admin.role.edit',compact('role','permissions', 'already_permissions'));
     }
 
     /**
@@ -91,10 +96,29 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Role $role)
     {
+        $rules= [
+            'name' => 'required|unique:roles,name,'.$role->id,
+            'permissions'=>'required'
+        ];
+        $messages=[
+            'role_name.required' => 'You must enter name',
+            'role_name.unique' => 'Name already exists',
+            'permissions.required' => 'You must choose one',
+        ];
+        $request->validate($rules,$messages);
+        $permissions= $request->permissions;
+        PermissionRole::where('role_id',$role->id)->delete();
+        $role_id=Role::create(['name'=> $request->name])->id;
+        foreach ($permissions as $permission){
+            PermissionRole::create([
+                'role_id' => intval($role_id),
+                'permissions_id' => intval($permission),
+            ]);
+        }
+        return redirect()->route('admin.role.index')->with('toast_success', 'Update role successful');
 
-        return redirect()->route('admin.role.index')->with('toast_success', 'Update Role Successfully!');
     }
 
     /**
@@ -105,10 +129,8 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        if($id==0 || $id ==1 ){
-            return redirect()->route('admin.role.index')->with('toast_error', 'Cannot delete this role');
-        }
+        PermissionRole::where('role_id',$id)->delete();
         Role::where('id',$id)->delete();
-            return redirect()->route('admin.role.index')->with('toast_success', 'Delete role successful');
+        return redirect()->route('admin.role.index')->with('toast_success', 'Delete role successful');
     }
 }

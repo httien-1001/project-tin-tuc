@@ -19,6 +19,7 @@ Auth::routes();
 
 
 Route::group(['prefix'=> 'admin','middleware' => 'auth', 'as' => 'admin.'],function(){
+    Route::resource('', \App\Http\Controllers\AdminController::class);
     Route::resource('role', \App\Http\Controllers\RoleController::class);
     Route::resource('user', \App\Http\Controllers\UserController::class);
     Route::resource('post', \App\Http\Controllers\PostController::class);
@@ -28,6 +29,5 @@ Route::group(['prefix'=> 'admin','middleware' => 'auth', 'as' => 'admin.'],funct
 Route::group(['prefix'=> 'customer','middleware' => 'auth', 'as' => 'customer.'],function(){
     Route::resource('comment', \App\Http\Controllers\CommentController::class);
 });
-
 
 

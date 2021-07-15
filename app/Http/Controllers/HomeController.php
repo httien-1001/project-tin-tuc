@@ -2,12 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Comments;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Models\Post;
-use Illuminate\Support\Facades\Route;
-use Mail;
+use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -18,7 +14,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-       /*$this->middleware('auth');*/
+
     }
 
     /**
@@ -27,9 +23,7 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
-    {
-        $data=Post::paginate(10);
+    {   $data=Post::paginate(10);
         return view('home',compact('data'));
     }
-
 }

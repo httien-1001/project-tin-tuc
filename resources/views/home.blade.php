@@ -1,7 +1,6 @@
-@extends('layouts.master')
+@extends('layouts.master-2')
 @section('styles')
     <style>
-
     </style>
 @endsection
 @section('content')
@@ -13,7 +12,7 @@
                         <div class="card-body d-flex flex-column align-items-start">
                             <h4 class="mb-0" >
                                 <b>
-                                {{$d->title}}
+                                    {{$d->title}}
                                 </b>
                             </h4>
                             <div class="mb-1 text-muted mb-4">{{$d->updated_at}}</div>
@@ -47,14 +46,14 @@
                                                                         <span  style="font-size: 12px">on {{$cmt->created_at}} by {{$cmt->getCommenter->name}}
                                                                         <span>
                                                                         @if(Auth::id()==$cmt->getCommenter->id)
-                                                                            <form action="{{route('customer.comment.destroy',['comment'=>$cmt->id])}}" class="form" method="post">
+                                                                                <form action="{{route('customer.comment.destroy',['comment'=>$cmt->id])}}" class="form" method="post">
                                                                                 @csrf
-                                                                                @method('delete')
+                                                                                    @method('delete')
                                                                                 <button type="submit"class="btn btn-default">
                                                                                     <span style="font-size: 12px">Delete comment</span>
                                                                                 </button>
                                                                             </form>
-                                                                        @endif
+                                                                            @endif
                                                                         </span>
                                                                             </span>
                                                                     </div>

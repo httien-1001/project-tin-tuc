@@ -57,12 +57,13 @@ class LoginController extends Controller
         return ;
     }
     if ($this->attemptLogin($request)) {
-        Mail::send('customer.mail',[
-        ],function($mail) use ($request){
-            $mail->to('ttien.1001.2000@gmail.com',Auth::user()->email);
-            $mail->from('tienht.vn@gmail.com');
-            $mail->subject('Loggin warning');
-        });
+//        Mail::send('customer.mail',[
+//        ],function($mail) use ($request){
+//            $mail->to('ttien.1001.2000@gmail.com',Auth::user()->email);
+//            $mail->from('tienht.vn@gmail.com');
+//            $mail->subject('Loggin warning');
+//        });
+
         return $this->sendLoginResponse($request);
     }
     // If the login attempt was unsuccessful we will increment the number of attempts
@@ -71,9 +72,5 @@ class LoginController extends Controller
     $this->incrementLoginAttempts($request);
 
     return $this->sendFailedLoginResponse($request);
-}
-public function showLoginForm()
-{
-    return view('auth.login');
 }
 }
