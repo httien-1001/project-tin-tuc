@@ -20,7 +20,7 @@
                     <i class="fa fa-circle"></i>
                 </li>
                 <li>
-                    <span class="active">Form add role</span>
+                    <span class="active">Edit role</span>
                 </li>
             </ul>
             <!-- END PAGE BREADCRUMB -->
@@ -36,7 +36,7 @@
                             </div>
                         </div>
                         <div class="portlet-body form">
-                            <form role="form"  method="POST" action="{{route('admin.role.update',$role->id)}}" >
+                            <form role="form"  method="POST" action="{{route('admin.role.update',['role'=> $role->id])}}" >
                                 @csrf
                                 @method('PUT')
                                 <div class="form-body">
@@ -44,8 +44,8 @@
                                         <label>Role name</label>
                                         <div class="input-icon">
                                             <i class="fa font-green"></i>
-                                            <input type="text" class="form-control" name="name" value="{{$role->name}}">
-                                            @error('role_name')
+                                            <input type="text" class="form-control" name="name" value="{{$role->name}}" >
+                                            @error('name')
                                             <div class="alert alert-danger alert-dismissible" role="alert">
                                                 {{$message }}
                                             </div>

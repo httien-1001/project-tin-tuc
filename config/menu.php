@@ -9,6 +9,10 @@ return [
         'route' => 'admin.user.index',
     ],
     [
+        'label' => 'Category',
+        'route' => 'admin.category.index',
+    ],
+    [
         'label' => 'Post',
         'route' => 'admin.post.index',
     ],
@@ -16,5 +20,6 @@ return [
         'label' => 'Comment',
         'route' => 'admin.comment.index',
     ],
+
 ];
 ?>

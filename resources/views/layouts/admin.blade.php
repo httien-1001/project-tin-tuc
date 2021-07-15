@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 
 <html lang="en">
 <!--<![endif]-->
@@ -200,7 +200,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
 @yield('js')
-@include('sweetalert::alert', ['cdn' => "https://cdn.jsdelivr.net/npm/sweetalert2@9"])
+@include('sweetalert::alert')
 </body>
 
 </html>

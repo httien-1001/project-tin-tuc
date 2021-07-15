@@ -71,7 +71,10 @@
                                 </div>
                                 <div class="form-actions">
                                     <button type="submit" class="btn blue" >Submit</button>
-                                    <button type="button" class="btn default" href="{{route('admin.role.index')}}">Cancel</button>
+                                    <a href="{{route('admin.role.index')}}">
+
+                                    <button type="button" class="btn default" >Cancel</button>
+                                    </a>
                                 </div>
                             </form>
                         </div>

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use App\Models\User;
+use App\Models\UserRole;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -25,7 +27,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -58,7 +60,10 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user=User::where('id',$id)->first();
+        $roles=Role::all();
+        $already_roles=UserRole::where('user_id',$id)->pluck('role_id')->toArray();
+        return view('admin.user.edit',compact('user','roles','already_roles'));
     }
 
     /**
@@ -70,7 +75,18 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $rules= [
+            'roles'=>'required'
+        ];
+        $messages=[
+            'roles.required' => 'You must choose one',
+        ];
+        $request->validate($rules,$messages);
+        $user=User::where('id',$id)->first();
+        $user->name = empty($request->name) ? $user->name : $request->name;
+        $user->save();
+        $user->roles()->sync($request->roles);
+        return redirect()->route('admin.user.index')->with('toast_success', 'Update user successful');
     }
 
     /**

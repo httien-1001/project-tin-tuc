@@ -51,15 +51,9 @@ class RoleController extends Controller
             'permissions.required' => 'You must choose one',
         ];
         $request->validate($rules,$messages);
-        $permissions= $request->permissions;
         $role_id=Role::create(['name'=> $request->role_name,])->id;
-        foreach ($permissions as $permission){
-            PermissionRole::create([
-                'role_id' => intval($role_id),
-                'permissions_id' => intval($permission),
-
-            ]);
-        }
+        $new_role=Role::where('id',$role_id)->first();
+        $new_role->permissions()->attach($request->permissions);
         return redirect()->route('admin.role.index')->with('toast_success', 'Create Role Successfully!');
 
     }
@@ -96,27 +90,19 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Role $role)
+    public function update(Request $request, $id)
     {
         $rules= [
-            'name' => 'required|unique:roles,name,'.$role->id,
             'permissions'=>'required'
         ];
         $messages=[
-            'role_name.required' => 'You must enter name',
-            'role_name.unique' => 'Name already exists',
             'permissions.required' => 'You must choose one',
         ];
         $request->validate($rules,$messages);
-        $permissions= $request->permissions;
-        PermissionRole::where('role_id',$role->id)->delete();
-        $role_id=Role::create(['name'=> $request->name])->id;
-        foreach ($permissions as $permission){
-            PermissionRole::create([
-                'role_id' => intval($role_id),
-                'permissions_id' => intval($permission),
-            ]);
-        }
+        $role=Role::where('id',$id)->first();
+        $role->name = empty($request->name) ? $role->name : $request->name;
+        $role->save();
+        $role->permissions()->sync($request->permissions);
         return redirect()->route('admin.role.index')->with('toast_success', 'Update role successful');
 
     }

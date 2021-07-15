@@ -30,9 +30,6 @@
                             <div class="table-toolbar">
                                 <div class="row">
                                     <div class="col-md-6">
-
-                                    </div>
-                                    <div class="col-md-6">
                                         {{--                                        <div class="btn-group pull-right">--}}
                                         {{--                                            <button class="btn green btn-outline dropdown-toggle" data-toggle="dropdown">Tools--}}
                                         {{--                                                <i class="fa fa-angle-down"></i>--}}
@@ -73,13 +70,13 @@
                                         <td> {{$user->email}} </td>
                                         <td>
                                         @foreach($user->roles as $role)
-                                        {{$role->name}}
+                                            <p>{{$role->name}}</p>
                                         @endforeach
                                         </td>
 
                                         <td> {{$user->updated_at}} </td>
                                         <td>
-                                            <a class="delete" href="javascript:;"> Edit </a>
+                                            <a class="edit" href="{{route('admin.user.edit',$user->id)}}"> Edit </a>
                                         </td>
                                         <td>
                                             <form action="{{route('admin.user.destroy',$user->id)}}" class="form"

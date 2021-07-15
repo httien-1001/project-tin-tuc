@@ -22,6 +22,7 @@ Route::group(['prefix'=> 'admin','middleware' => 'auth', 'as' => 'admin.'],funct
     Route::resource('', \App\Http\Controllers\AdminController::class);
     Route::resource('role', \App\Http\Controllers\RoleController::class);
     Route::resource('user', \App\Http\Controllers\UserController::class);
+    Route::resource('category', \App\Http\Controllers\CategoryController::class);
     Route::resource('post', \App\Http\Controllers\PostController::class);
     Route::resource('comment', \App\Http\Controllers\ManageCommentColler::class);
 });
