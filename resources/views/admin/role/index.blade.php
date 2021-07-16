@@ -84,7 +84,7 @@
                                     </td>
                                     <td> {{$role->updated_at}} </td>
                                     <td>
-                                        <a class="edit" href="{{route('admin.role.edit',$role->id)}}"> Edit </a>
+                                        <a class="btn btn-sm btn-warning" href="{{route('admin.role.edit',$role->id)}}"> Edit </a>
                                     </td>
                                     <td>
                                         <form action="{{route('admin.role.destroy',$role->id)}}" class="form"
@@ -92,8 +92,8 @@
                                             @csrf
                                             @method('delete')
                                             <button type="submit"
-                                                    class="btn btn-xs btn-danger ml-2">
-                                                <i class="far fa-trash-alt" onclick="confirm('Are you sure to delete this role?')">Delete</i>
+                                                    class="btn btn-sm btn-danger ml-2">
+                                                Delete
                                             </button>
                                         </form>
                                     </td>

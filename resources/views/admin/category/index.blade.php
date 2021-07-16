@@ -71,25 +71,25 @@
                                 <tbody>
                                 <?php $key=1; ?>
                                 @foreach($categories as $category)
-                                    <tr>
+                                    <tr class="category_{{$category->id}}">
                                         <td> {{$key++}} </td>
                                         <td> {{$category->name}} </td>
                                         <td> {{$category->updated_at}} </td>
                                         <td>
-                                            <a class="edit" href="{{route('admin.category.edit',$category->id)}}"> Edit </a>
+                                            <a class="btn btn-sm btn-warning" href="{{route('admin.category.edit',$category->id)}}"> Edit </a>
                                         </td>
                                         <td>
-                                            <form action="{{route('admin.category.destroy',$category->id)}}" class="form"
-                                                  method="post">
+                                            <form action="{{route('admin.category.destroy',$category->id)}}" class="form" method="post">
                                                 @csrf
                                                 @method('delete')
                                                 <button type="submit"
-                                                        class="btn btn-xs btn-danger ml-2">
-                                                    <i class="far fa-trash-alt" onclick="confirm('Are you sure to delete this category?')">Delete</i>
+                                                        class="btn btn-sm btn-danger ml-2">
+                                                    Delete
                                                 </button>
                                             </form>
                                         </td>
                                     </tr>
+
                                 @endforeach
                                 </tbody>
                             </table>
@@ -102,5 +102,9 @@
         </div>
         <!-- END CONTENT BODY -->
     </div>
+
+    <script>
+    </script>
 @endsection
+
 
