@@ -6,7 +6,8 @@ use App\Models\Role;
 use App\Models\User;
 use App\Models\UserRole;
 use Illuminate\Http\Request;
-
+use App\Models\Post;
+use App\Models\Comments;
 class UserController extends Controller
 {
     /**
@@ -86,7 +87,7 @@ class UserController extends Controller
         $user->name = empty($request->name) ? $user->name : $request->name;
         $user->save();
         $user->roles()->sync($request->roles);
-        return redirect()->route('admin.user.index')->with('toast_success', 'Update user successful');
+        return redirect()->route('admin.user.index')->with('success', 'Update user successful');
     }
 
     /**
@@ -97,6 +98,11 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-
+        if(Post::where('user_id',$id)->first() ||Comments::where('user_id',$id )->first()){
+            return redirect()->route('admin.role.index')->with('success', 'Cannot delete this user successful');
+        }
+        UserRole::where('user_id',$id)->delete();
+        User::where('id',$id)->delete();
+        return redirect()->route('admin.user.index')->with('success', 'Delete user successful');
     }
 }

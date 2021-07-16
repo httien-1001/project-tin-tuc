@@ -6,6 +6,7 @@ use App\Models\Permission;
 use App\Models\PermissionRole;
 use App\Models\Role;
 use App\Models\User;
+use App\Models\UserRole;
 use Illuminate\Http\Request;
 
 class RoleController extends Controller
@@ -54,7 +55,7 @@ class RoleController extends Controller
         $role_id=Role::create(['name'=> $request->role_name,])->id;
         $new_role=Role::where('id',$role_id)->first();
         $new_role->permissions()->attach($request->permissions);
-        return redirect()->route('admin.role.index')->with('toast_success', 'Create Role Successfully!');
+        return redirect()->route('admin.role.index')->with('success', 'Create Role Successfully!');
 
     }
 
@@ -103,7 +104,7 @@ class RoleController extends Controller
         $role->name = empty($request->name) ? $role->name : $request->name;
         $role->save();
         $role->permissions()->sync($request->permissions);
-        return redirect()->route('admin.role.index')->with('toast_success', 'Update role successful');
+        return redirect()->route('admin.role.index')->with('success', 'Update role successful');
 
     }
 
@@ -115,8 +116,13 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        PermissionRole::where('role_id',$id)->delete();
-        Role::where('id',$id)->delete();
-        return redirect()->route('admin.role.index')->with('toast_success', 'Delete role successful');
+        if(UserRole::where('role_id',$id)->first()){
+            return redirect()->route('admin.role.index')->with('success', 'Cannot delete this role!');
+        } else {
+            PermissionRole::where('role_id',$id)->delete();
+            Role::where('id',$id)->delete();
+            return redirect()->route('admin.role.index')->with('success', 'Delete role successful');
+        }
+
     }
 }

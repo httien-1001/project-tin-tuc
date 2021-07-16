@@ -51,7 +51,6 @@
                             </div>
                             <table class="table table-striped table-hover table-bordered" id="sample_editable_1">
                                 <thead>
-                                <?php $key=1 ?>
                                 <tr>
                                     <th> STT </th>
                                     <th> Full Name </th>
@@ -63,6 +62,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                <?php $key=1 ?>
                                 @foreach($users as $user)
                                     <tr>
                                         <td> {{$key++}} </td>
@@ -76,7 +76,7 @@
 
                                         <td> {{$user->updated_at}} </td>
                                         <td>
-                                            <a class="edit" href="{{route('admin.user.edit',$user->id)}}"> Edit </a>
+                                            <a class="btn btn-sm btn-warning" href="{{route('admin.user.edit',$user->id)}}"> Edit </a>
                                         </td>
                                         <td>
                                             <form action="{{route('admin.user.destroy',$user->id)}}" class="form"
@@ -84,7 +84,7 @@
                                                 @csrf
                                                 @method('delete')
                                                 <button type="submit"
-                                                        class="btn btn-xs btn-danger ml-2">
+                                                        class="btn btn-sm btn-danger ml-2">
                                                     <i class="far fa-trash-alt">Delete</i>
                                                 </button>
                                             </form>

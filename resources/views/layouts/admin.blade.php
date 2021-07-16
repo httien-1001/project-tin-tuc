@@ -34,7 +34,11 @@
     <link href="{{url('/public')}}/assets/layouts/layout4/css/custom.min.css" rel="stylesheet" type="text/css" />
     <link href="{{url('/public')}}/assets/pages/css/blog.min.css" rel="stylesheet" type="text/css" />
     <!-- END THEME LAYOUT STYLES -->
-    <link rel="shortcut icon" href="favicon.ico" /> </head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.11.0/sweetalert2.css" />
+    <link rel="shortcut icon" href="favicon.ico" />
+    <script src="{{url('/public')}}/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.11.0/sweetalert2.all.min.js"></script>
+</head>
 <!-- END HEAD -->
 
 <body class="page-container-bg-solid page-header-fixed page-sidebar-closed-hide-logo">
@@ -146,7 +150,7 @@
 <script src="../assets/global/plugins/ie8.fix.min.js"></script>
 <![endif]-->
 <!-- BEGIN CORE PLUGINS -->
-<script src="{{url('/public')}}/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+
 <script src="{{url('/public')}}/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="{{url('/public')}}/assets/global/plugins/js.cookie.min.js" type="text/javascript"></script>
 <script src="{{url('/public')}}/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
@@ -196,11 +200,10 @@
 <script src="{{url('/public')}}/assets/layouts/layout4/scripts/demo.min.js" type="text/javascript"></script>
 <script src="{{url('/public')}}/assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
 <script src="{{url('/public')}}/assets/layouts/global/scripts/quick-nav.min.js" type="text/javascript"></script>
-<!-- END THEME LAYOUT SCRIPTS -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+<script src="https://cdn.ckeditor.com/4.16.1/standard/ckeditor.js"></script>
 
-@yield('js')
-@include('sweetalert::alert')
+@include('sweetalert::alert', ['cdn' => "https://cdn.jsdelivr.net/npm/sweetalert2@9"])
+
 </body>
-
 </html>
+

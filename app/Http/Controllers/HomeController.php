@@ -23,7 +23,13 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
-    {   $data=Post::paginate(10);
-        return view('home',compact('data'));
+    {
+        $posts=Post::where('status',1)->paginate(10);
+        return view('home',compact('posts'));
+    }
+    public function show($id)
+    {
+        $detail=Post::where('id',$id)->first();
+        return view('detail',compact('detail'));
     }
 }
