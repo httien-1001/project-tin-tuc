@@ -32,7 +32,7 @@
                         <div class="portlet-title">
                             <div class="caption font-red-sunglo">
                                 <i class="icon-settings font-red-sunglo"></i>
-                                <span class="caption-subject bold uppercase"> Create New Post Form</span>
+                                <span class="caption-subject bold uppercase"> Edit "{{$post->title}}" Post Form</span>
                             </div>
                         </div>
                         <div class="portlet-body form">
@@ -87,7 +87,7 @@
                                             <div class="input-icon">
                                                 <i class="fas fa-pencil-alt"></i>
                                                 <textarea type="text" id="ckeditor2" class="ckeditor" name="post_content" >
-                                                    {!! $post->post_content !!}
+                                                    {!! $post->content !!}
                                                 </textarea>
                                                 @error('post_content')
                                                 <div class="alert alert-danger alert-dismissible" role="alert">
