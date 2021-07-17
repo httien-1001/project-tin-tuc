@@ -30,22 +30,6 @@
                             <div class="table-toolbar">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        {{--                                        <div class="btn-group pull-right">--}}
-                                        {{--                                            <button class="btn green btn-outline dropdown-toggle" data-toggle="dropdown">Tools--}}
-                                        {{--                                                <i class="fa fa-angle-down"></i>--}}
-                                        {{--                                            </button>--}}
-                                        {{--                                            <ul class="dropdown-menu pull-right">--}}
-                                        {{--                                                <li>--}}
-                                        {{--                                                    <a href="javascript:;"> Print </a>--}}
-                                        {{--                                                </li>--}}
-                                        {{--                                                <li>--}}
-                                        {{--                                                    <a href="javascript:;"> Save as PDF </a>--}}
-                                        {{--                                                </li>--}}
-                                        {{--                                                <li>--}}
-                                        {{--                                                    <a href="javascript:;"> Export to Excel </a>--}}
-                                        {{--                                                </li>--}}
-                                        {{--                                            </ul>--}}
-                                        {{--                                        </div>--}}
                                     </div>
                                 </div>
                             </div>
@@ -85,7 +69,7 @@
                                                 @method('delete')
                                                 <button type="submit"
                                                         class="btn btn-sm btn-danger ml-2">
-                                                    <i class="far fa-trash-alt">Delete</i>
+                                                    <i class="far fa-trash-alt"></i>
                                                 </button>
                                             </form>
                                         </td>

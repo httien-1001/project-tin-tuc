@@ -2,19 +2,11 @@
 @section('content')
     <!-- BEGIN CONTAINER -->
     <div class="page-container">
+        @guest
         <!-- BEGIN SIDEBAR -->
+            @else
         <div class="page-sidebar-wrapper">
-            <!-- BEGIN SIDEBAR -->
-            <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
-            <!-- DOC: Change data-auto-speed="200" to adjust the sub menu slide up/down speed -->
             <div class="page-sidebar navbar-collapse collapse">
-                <!-- BEGIN SIDEBAR MENU -->
-                <!-- DOC: Apply "page-sidebar-menu-light" class right after "page-sidebar-menu" to enable light sidebar menu style(without borders) -->
-                <!-- DOC: Apply "page-sidebar-menu-hover-submenu" class right after "page-sidebar-menu" to enable hoverable(hover vs accordion) sub menu mode -->
-                <!-- DOC: Apply "page-sidebar-menu-closed" class right after "page-sidebar-menu" to collapse("page-sidebar-closed" class must be applied to the body element) the sidebar sub menu mode -->
-                <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
-                <!-- DOC: Set data-keep-expand="true" to keep the submenues expanded -->
-                <!-- DOC: Set data-auto-speed="200" to adjust the sub menu slide up/down speed -->
                 <ul class="page-sidebar-menu   " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
                     <li class="nav-item start ">
                         <a href="javascript:;" class="nav-link nav-toggle">
@@ -24,9 +16,15 @@
                         </a>
                         <ul class="sub-menu">
                             <li class="nav-item start ">
-                                <a href="index.html" class="nav-link ">
+                                <a href="{{route('customer.profile.index')}}" class="nav-link ">
                                     <i class="icon-bar-chart"></i>
-                                    <span class="title">Dashboard 1</span>
+                                    <span class="title">Profile</span>
+                                </a>
+                            </li>
+                            <li class="nav-item start ">
+                                <a href="{{route('customer.profile.show',Auth::id())}}" class="nav-link ">
+                                    <i class="icon-bar-chart"></i>
+                                    <span class="title">Comment</span>
                                 </a>
                             </li>
                         </ul>
@@ -37,6 +35,7 @@
             <!-- END SIDEBAR -->
         </div>
         <!-- END SIDEBAR -->
+        @endguest
         <!-- BEGIN CONTENT -->
         <div class="page-content-wrapper">
             <!-- BEGIN CONTENT BODY -->
@@ -51,21 +50,24 @@
                             <div class="row">
                                 @foreach($posts as $post)
                                 <div class="col-sm-6">
+                                    <a href="{{route('home.show',$post->id)}}">
                                     <div class="blog-post-sm bordered blog-container">
                                         <div class="blog-img-thumb">
-                                         <a href="{{route('home.show',$post->id)}}">
-                                            <img  src="public/uploads/{{ $post->cover_image}}" style="object-fit: contain; min-height: 300px" >
-                                        </a>-
+                                            <a href="{{route('home.show',$post->id)}}">
+                                                <img  src="public/uploads/{{ $post->cover_image}}" style="object-fit: contain; min-height: 300px" >
+                                            </a>
                                         </div>
                                         <div class="blog-post-content">
                                             <h2 class="blog-title blog-post-title">
-                                                <a href="javascript:;">{{$post->title}}</a>
+                                                <a href="{{route('home.show',$post->id)}}">{{$post->title}}</a>
                                             </h2>
                                             <p class="blog-post-desc">{{$post->description}}</p>
                                             <div class="blog-post-foot">
                                                 <div class="blog-post-meta">
                                                     <i class="icon-calendar font-blue"></i>
-                                                    <a href="">{{ $post->created_at->format('d/m/Y') }}</a>
+                                                    @isset($post->updated_at)
+                                                    {{ $post->updated_at->format('d/m/Y') }}
+                                                    @endisset
                                                 </div>
                                                 <div class="blog-post-meta">
                                                     <i class="icon-bubble font-blue"></i>
@@ -73,7 +75,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
                                 </div>
                                 @endforeach
                             </div>

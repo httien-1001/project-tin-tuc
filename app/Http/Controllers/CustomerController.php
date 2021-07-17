@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Comments;
-use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class CommentController extends Controller
+class CustomerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +14,7 @@ class CommentController extends Controller
      */
     public function index()
     {
-
+        dd(Auth::user());
     }
 
     /**
@@ -36,22 +35,10 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        $rules= [
-            'message' => 'required',
-
-        ];
-        $messages=[
-            'message.required' => 'You must enter comment',
-        ];
-        $request->validate($rules,$messages);
-        Comments::create([
-            "user_id" => $request->user_id,
-            "post_id" => $request->post_id,
-            "content" => $request->message,
-        ]);
-        return redirect()->back()->with('toast', 'Add Comment Successfully!');
+        //
     }
-        /**
+
+    /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -59,7 +46,7 @@ class CommentController extends Controller
      */
     public function show($id)
     {
-        //
+        dd($id);
     }
 
     /**

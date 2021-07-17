@@ -56,9 +56,9 @@ class PostController extends Controller
             'profile_image'=>'required',
         ];
         $messages=[
-            'post_title.required' => 'You must  enter this field',
-            'post_description.required' => 'You must  enter this field',
-            'post_content.required' => 'You must  enter this field',
+            'post_title.required' => 'You must  enter title',
+            'post_description.required' => 'You must  enter description',
+            'post_content.required' => 'You must  enter content',
             'profile_image.required' => 'You must  enter this profile image',
         ];
         $request->validate($rules,$messages);
@@ -134,33 +134,33 @@ class PostController extends Controller
             'post_content'=>'required',
         ];
         $messages=[
-            'post_title.required' => 'You must  enter this field',
-            'post_description.required' => 'You must  enter this field',
-            'post_content.required' => 'You must  enter this field',
+            'post_title.required' => 'You must  enter title',
+            'post_description.required' => 'You must  enter description',
+            'post_content.required' => 'You must  enter content',
         ];
         $request->validate($rules,$messages);
-        if($request->hasFile('cover_image')){
-            $old_file = Post::where('id',$id)->get()->pluck('cover_image');
-            if($old_file[0] != null && file_exists(public_path('uploads/'.$old_file))){
-                unlink(public_path('uploads/'.$old_file));
-            }
-            $profile_image = $request->file('cover_image');
+        $flag =false;
+        if($request->hasFile('profile_image')){
+            $profile_image = $request->file('profile_image');
             $profile_name=time().'_'.$profile_image->getClientOriginalName();
             $destinationPath = public_path('uploads');
             $profile_image->move($destinationPath, $profile_name);
             Post::where('id',$id)->update([
                 'cover_image' => $profile_name]);
+            $flag=true;
         }
-        Post::where('id',$id)->update([
+        $flag_1=Post::where('id',$id)->update([
             'user_id'=> $request->user_id,
-            'category_id' => $request-> category_id,
             'title'=> $request->post_title,
             'content'=> $request->post_content,
-            'description'=> $request->post_description,
-            'status' => $request->status
+            'status'=> $request->status,
         ]);
+        if($flag || $flag_1){
+            return redirect()->route('admin.post.index')->with('toast_success', 'Update Post Successfully!');
+        } else {
+            return redirect()->route('admin.post.index')->with('toast_success', 'Error Occurs');
 
-            return redirect()->route('admin.post.index')->with('success', 'Update Post Successfully!');
+        }
     }
 
     /**

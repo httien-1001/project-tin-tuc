@@ -35,6 +35,7 @@
     <link href="{{url('/public')}}/assets/pages/css/blog.min.css" rel="stylesheet" type="text/css" />
     <!-- END THEME LAYOUT STYLES -->
     <link rel="shortcut icon" href="favicon.ico" /> </head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" referrerpolicy="no-referrer" />
 <!-- END HEAD -->
 
 <body class="page-container-bg-solid page-header-fixed page-sidebar-closed-hide-logo">
@@ -166,6 +167,7 @@
 <script src="{{url('/public')}}/assets/layouts/layout4/scripts/demo.min.js" type="text/javascript"></script>
 <script src="{{url('/public')}}/assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
 <script src="{{url('/public')}}/assets/layouts/global/scripts/quick-nav.min.js" type="text/javascript"></script>
+
 </body>
 
 </html>

@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class UsersRolesTableSeeder extends Seeder
+class CategorySeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,10 +13,8 @@ class UsersRolesTableSeeder extends Seeder
      */
     public function run()
     {
-
-        \DB::table('users_roles')->insert([
-            'user_id' => 1,
-            'role_id' =>'1',
+        \DB::table('categories')->insert([
+            'name' => 'Demo category 1'
         ]);
     }
 }

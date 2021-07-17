@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\Comments;
 use App\Models\Post;
-use Illuminate\Http\Request;
 
-class CommentController extends Controller
+class AdminCommentController extends Controller
 {
+    //
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +16,10 @@ class CommentController extends Controller
      */
     public function index()
     {
-
+        $posts = Post::all();
+        $comments = Comments::withTrashed()->paginate(20);
+        $comments_deleted = Comments::onlyTrashed()->paginate(20);
+        return view('admin.comment.index', compact('posts', 'comments', 'comments_deleted'));
     }
 
     /**
@@ -25,59 +29,50 @@ class CommentController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $rules= [
-            'message' => 'required',
-
-        ];
-        $messages=[
-            'message.required' => 'You must enter comment',
-        ];
-        $request->validate($rules,$messages);
-        Comments::create([
-            "user_id" => $request->user_id,
-            "post_id" => $request->post_id,
-            "content" => $request->message,
-        ]);
-        return redirect()->back()->with('toast', 'Add Comment Successfully!');
+        //
     }
-        /**
+
+    /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        //
+        Comments::withTrashed()->where('id', $id)->delete();
+        return redirect()->back()->with('success', 'Hide Comment Successfully!');
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        //
+        Comments::withTrashed()->where('id', $id)->restore();
+        return redirect()->back()->with('success', 'Restore Comment Successfully!');
+
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -88,11 +83,12 @@ class CommentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
+        Comments::where('id', $id)->forceDelete();
+        return redirect()->back()->with('success', 'Delete Comment Successfully!');
     }
 }
