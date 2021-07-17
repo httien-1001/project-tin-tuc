@@ -3,9 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Route;
 
-class RolesTableSeeder extends Seeder
+class PerRoleSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,9 +13,6 @@ class RolesTableSeeder extends Seeder
      */
     public function run()
     {
-
-        \DB::table('roles')->insert([
-            'name' => 'Admin',
-        ]);
+        //
     }
 }
