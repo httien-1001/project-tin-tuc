@@ -15,8 +15,7 @@ class CommentController extends Controller
      */
     public function index()
     {
-        $comments=Comments::paginate(20);
-        return view('admin.comment.index');
+
     }
 
     /**
@@ -37,10 +36,22 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $rules= [
+            'message' => 'required',
 
-    /**
+        ];
+        $messages=[
+            'message.required' => 'You must enter comment',
+        ];
+        $request->validate($rules,$messages);
+        Comments::create([
+            "user_id" => $request->user_id,
+            "post_id" => $request->post_id,
+            "content" => $request->message,
+        ]);
+        return redirect()->back()->with('toast', 'Add Comment Successfully!');
+    }
+        /**
      * Display the specified resource.
      *
      * @param  int  $id

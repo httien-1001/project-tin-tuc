@@ -24,21 +24,23 @@
                         <div class="portlet-title">
                             <div class="caption">
                                 <i class="icon-settings font-red"></i>
-                                <span class="caption-subject font-red sbold uppercase">Comments Table</span>
+                                <span class="caption-subject font-red sbold uppercase">Comment Table</span>
                             </div>
                         </div>
                         <div class="portlet-body">
                             <div class="table-toolbar">
                                 <div class="row">
                                     <div class="col-md-6">
-
+                                        <div class="btn-group">
+                                        </div>
                                     </div>
                                     <div class="col-md-6">
                                     </div>
                                 </div>
                             </div>
-                            <table class="table table-striped table-responsive">
+                            <table class="table table-striped table-hover table-bordered" id="sample_editable_1">
                                 <thead>
+                                <?php $key=1 ?>
                                 <tr >
                                     <th>STT</th>
                                     <th>Post title</th>
@@ -50,13 +52,12 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <?php $key=1 ?>
                                 @foreach($comments as $cmt)
                                     <tr >
                                         <td style=" vertical-align: middle;">{{$key++}}</td>
-                                        <td style=" vertical-align: middle;">{{$cmt->getPost->title}}</td>
+                                        <td style=" vertical-align: middle;">{{$cmt->post->title}}</td>
                                         <td style=" vertical-align: middle;">{{$cmt->content}}</td>
-                                        <td style=" vertical-align: middle;">{{$cmt->getCommenter->name}}</td>
+                                        <td style=" vertical-align: middle;">{{$cmt->commenter->name}}</td>
                                         <td style=" vertical-align: middle;">{{$cmt->created_at}}</td>
                                         <td style=" vertical-align: middle;">
                                             {{($cmt->deleted_at != null ? 'Hide ' : 'Show ')}}
@@ -64,12 +65,12 @@
                                         <td style=" vertical-align: middle; display: flex">
                                             @if($cmt->deleted_at != null)
                                                 <a href="{{route('admin.comment.edit',$cmt->id)}}">
-                                                    <button class="btn btn-primary btn-xs-ml-2">
+                                                    <button class="btn btn-primary btn-xs ml-2">
                                                         <i class="fas fa-trash-restore-alt"></i></button>
                                                 </a>
                                             @else
                                                 <a href="{{route('admin.comment.show',$cmt->id)}}">
-                                                    <button class="btn btn-primary btn-xs-ml-2">
+                                                    <button class="btn btn-primary btn-xs ml-2">
                                                         <i class="fa fa-ban" aria-hidden="true"></i>
                                                     </button>
                                                 </a>
@@ -80,7 +81,7 @@
                                                 @method('delete')
                                                 <button type="submit"
                                                         class="btn btn-xs btn-danger ml-2">
-                                                    <i class="far fa-trash-alt"></i>
+                                                    <i class="fas fa-trash"></i>
                                                 </button>
                                             </form>
                                         </td>
@@ -101,5 +102,4 @@
         <!-- END CONTENT BODY -->
     </div>
 @endsection
-
 

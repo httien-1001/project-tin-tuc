@@ -30,6 +30,7 @@ class HomeController extends Controller
     public function show($id)
     {
         $detail=Post::where('id',$id)->first();
-        return view('detail',compact('detail'));
+        $posts_in_same_category=Post::where('category_id',$detail->category_id)->take(10);
+        return view('detail',compact('detail','posts_in_same_category'));
     }
 }

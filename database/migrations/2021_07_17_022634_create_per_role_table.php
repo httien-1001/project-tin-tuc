@@ -14,9 +14,16 @@ class CreatePerRoleTable extends Migration
     public function up()
     {
         Schema::create('per_role', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+//            $table->engine = 'InnoDB';
+            $table->increments('id');
+            $table->integer('permission_id')->unsigned();
+            $table->integer('role_id')->unsigned();
+            $table->foreign('permission_id')->references('id')->on('permissions');
+            $table->foreign('role_id')->references('id')->on('roles');
+//            $table->primary(['permissions_id','role_id']);
+//            $table->timestamps();
         });
+
     }
 
     /**

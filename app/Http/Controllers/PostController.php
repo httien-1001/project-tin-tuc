@@ -56,9 +56,9 @@ class PostController extends Controller
             'profile_image'=>'required',
         ];
         $messages=[
-            'post_title.required' => 'You must  enter this field',
-            'post_description.required' => 'You must  enter this field',
-            'post_content.required' => 'You must  enter this field',
+            'post_title.required' => 'You must  enter title',
+            'post_description.required' => 'You must  enter description',
+            'post_content.required' => 'You must  enter content',
             'profile_image.required' => 'You must  enter this profile image',
         ];
         $request->validate($rules,$messages);
@@ -134,9 +134,9 @@ class PostController extends Controller
             'post_content'=>'required',
         ];
         $messages=[
-            'post_title.required' => 'You must  enter this field',
-            'post_description.required' => 'You must  enter this field',
-            'post_content.required' => 'You must  enter this field',
+            'post_title.required' => 'You must  enter title',
+            'post_description.required' => 'You must  enter description',
+            'post_content.required' => 'You must  enter content',
         ];
         $request->validate($rules,$messages);
         $flag =false;
@@ -153,6 +153,7 @@ class PostController extends Controller
             'user_id'=> $request->user_id,
             'title'=> $request->post_title,
             'content'=> $request->post_content,
+            'status'=> $request->status,
         ]);
         if($flag || $flag_1){
             return redirect()->route('admin.post.index')->with('toast_success', 'Update Post Successfully!');
