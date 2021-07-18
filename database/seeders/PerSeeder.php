@@ -96,20 +96,16 @@ class PerSeeder extends Seeder
             'route_name' =>'admin.user.index',
         ]);
         \DB::table('permissions')->insert([
-            'full_name' => 'View add user form',
-            'route_name' =>'admin.user.create',
-        ]);
-        \DB::table('permissions')->insert([
-            'full_name' => 'Create user',
-            'route_name' =>'admin.user.store',
-        ]);
-        \DB::table('permissions')->insert([
             'full_name' => 'View edit user form',
-            'route_name' =>'admin.user.update',
+            'route_name' =>'admin.user.edit',
         ]);
         \DB::table('permissions')->insert([
             'full_name' => 'Update user',
             'route_name' =>'admin.user.update',
+        ]);
+        \DB::table('permissions')->insert([
+            'full_name' => 'Delete user',
+            'route_name' =>'admin.user.destroy',
         ]);
 //        role
         \DB::table('permissions')->insert([

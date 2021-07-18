@@ -13,14 +13,6 @@ class PostSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('posts')->insert([
-            'user_id' => 1,
-            'category_id' =>1,
-            'status' =>1,
-            'title' =>'Demo title for post 1',
-            'description' =>'Demo description for post 1',
-            'content' =>'Demo content for post 1',
-            'cover_image' =>'demo.png',
-        ]);
+
     }
 }

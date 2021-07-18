@@ -19,7 +19,7 @@ class PerRoleSeeder extends Seeder
                 'permission_id' => $i,
             ]);
         }
-        for ($i = 6; $i <= 33; $i++) {
+        for ($i = 6; $i <= 32; $i++) {
             \DB::table('per_role')->insert([
                 'role_id' =>2,
                 'permission_id' => $i,

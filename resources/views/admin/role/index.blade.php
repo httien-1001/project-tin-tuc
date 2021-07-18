@@ -65,7 +65,6 @@
                                     <th> STT </th>
                                     <th> Roles Name </th>
                                     <th> Permissions Name </th>
-                                    <th> Last Updated At </th>
                                     <th> Edit </th>
                                     <th> Delete </th>
                                 </tr>
@@ -82,7 +81,6 @@
                                         <p>{{$permission->full_name}}</p>
                                     @endforeach
                                     </td>
-                                    <td> {{$role->updated_at}} </td>
                                     <td>
                                         <a class="btn btn-sm btn-warning" href="{{route('admin.role.edit',$role->id)}}"> Edit </a>
                                     </td>
