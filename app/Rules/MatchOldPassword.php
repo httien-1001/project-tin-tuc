@@ -3,7 +3,7 @@
 namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
-
+use Illuminate\Support\Facades\Hash;
 class MatchOldPassword implements Rule
 {
     /**
@@ -13,7 +13,7 @@ class MatchOldPassword implements Rule
      */
     public function __construct()
     {
-        //
+
     }
 
     /**
@@ -25,7 +25,7 @@ class MatchOldPassword implements Rule
      */
     public function passes($attribute, $value)
     {
-        //
+        return Hash::check($value, auth()->user()->password);
     }
 
     /**
@@ -35,6 +35,6 @@ class MatchOldPassword implements Rule
      */
     public function message()
     {
-        return 'The validation error message.';
+        return 'The current pass is incorrect';
     }
 }

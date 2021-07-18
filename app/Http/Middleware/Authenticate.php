@@ -7,7 +7,7 @@ use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Route;
 class Authenticate extends Middleware
 {
     /**
@@ -24,9 +24,9 @@ class Authenticate extends Middleware
         }
         $user = Auth::user();
         $route = $request->route()->getName();
-        /*if($user->cant($route)){
+        if($user->cant($route)){
             return abort(403);
-        }*/
+        }
         return $next($request);
     }
 }

@@ -2,6 +2,40 @@
 @section('content')
     <!-- BEGIN CONTENT -->
     <div class="page-container">
+    @guest
+        <!-- BEGIN SIDEBAR -->
+        @else
+            <div class="page-sidebar-wrapper">
+                <div class="page-sidebar navbar-collapse collapse">
+                    <ul class="page-sidebar-menu   " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
+                        <li class="nav-item start ">
+                            <a href="javascript:;" class="nav-link nav-toggle">
+                                <i class="icon-home"></i>
+                                <span class="title">Dashboard</span>
+                                <span class="arrow"></span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li class="nav-item start ">
+                                    <a href="{{route('home')}}" class="nav-link ">
+                                        <i class="icon-bar-chart"></i>
+                                        <span class="title">Home</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item start ">
+                                    <a href="{{route('customer.profile.index')}}" class="nav-link ">
+                                        <i class="icon-bar-chart"></i>
+                                        <span class="title">Profile</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <!-- END SIDEBAR MENU -->
+                </div>
+                <!-- END SIDEBAR -->
+            </div>
+            <!-- END SIDEBAR -->
+        @endguest
     <div class="page-content-wrapper">
         <!-- BEGIN CONTENT BODY -->
         <div class="page-content">
@@ -46,8 +80,9 @@
                                 <div class="c-comment-list">
                                     <div class="media">
                                         <div class="media-left">
-                                            <a href="#">
-                                                <img class="media-object" alt="" src=""> </a>
+                                                @isset($cmt->commenter->cover_image)
+                                                <img class="media-object" src="../public/uploads/{{ $cmt->commenter->cover_image}}" >
+                                                @endif
                                         </div>
                                         <div class="media-body">
                                             <h4 class="media-heading">
@@ -56,12 +91,12 @@
                                             {{$cmt->content}}
                                             <span class="pull-right">@if(Auth::id()==$cmt->commenter->id)
                                                     <form action="{{route('customer.comment.destroy',['comment'=>$cmt->id])}}" class="form" method="post">
-                                                                                @csrf
+                                                        @csrf
                                                         @method('delete')
-                                                                                <button type="submit"class="btn btn-default">
-                                                                                    <span style="font-size: 12px">Delete</span>
-                                                                                </button>
-                                                                            </form>
+                                                            <button type="submit"class="btn btn-default">
+                                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                                            </button>
+                                                    </form>
                                                 @endif
                                             </span>
 

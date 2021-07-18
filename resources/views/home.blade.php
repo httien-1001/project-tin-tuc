@@ -16,15 +16,15 @@
                         </a>
                         <ul class="sub-menu">
                             <li class="nav-item start ">
-                                <a href="{{route('customer.profile.index')}}" class="nav-link ">
+                                <a href="{{route('home')}}" class="nav-link ">
                                     <i class="icon-bar-chart"></i>
-                                    <span class="title">Profile</span>
+                                    <span class="title">Home</span>
                                 </a>
                             </li>
                             <li class="nav-item start ">
-                                <a href="{{route('customer.profile.show',Auth::id())}}" class="nav-link ">
+                                <a href="{{route('customer.profile.index')}}" class="nav-link ">
                                     <i class="icon-bar-chart"></i>
-                                    <span class="title">Comment</span>
+                                    <span class="title">Profile</span>
                                 </a>
                             </li>
                         </ul>
@@ -40,49 +40,44 @@
         <div class="page-content-wrapper">
             <!-- BEGIN CONTENT BODY -->
             <div class="page-content">
-                <!-- BEGIN PAGE HEAD-->
-                <div class="page-head">
-
-                <!-- END PAGE BREADCRUMB -->
                 <!-- BEGIN PAGE BASE CONTENT -->
                 <div class="blog-page blog-content-1">
-
-                            <div class="row">
-                                @foreach($posts as $post)
-                                <div class="col-sm-6">
+                    <div class="row">
+                        @foreach($posts as $post)
+                        <div class="col-md-6">
+                            <a href="{{route('home.show',$post->id)}}">
+                            <div class="blog-post-sm bordered blog-container">
+                                <div class="blog-img-thumb">
                                     <a href="{{route('home.show',$post->id)}}">
-                                    <div class="blog-post-sm bordered blog-container">
-                                        <div class="blog-img-thumb">
-                                            <a href="{{route('home.show',$post->id)}}">
-                                                <img  src="public/uploads/{{ $post->cover_image}}" style="object-fit: contain; min-height: 300px" >
-                                            </a>
-                                        </div>
-                                        <div class="blog-post-content">
-                                            <h2 class="blog-title blog-post-title">
-                                                <a href="{{route('home.show',$post->id)}}">{{$post->title}}</a>
-                                            </h2>
-                                            <p class="blog-post-desc">{{$post->description}}</p>
-                                            <div class="blog-post-foot">
-                                                <div class="blog-post-meta">
-                                                    <i class="icon-calendar font-blue"></i>
-                                                    @isset($post->updated_at)
-                                                    {{ $post->updated_at->format('d/m/Y') }}
-                                                    @endisset
-                                                </div>
-                                                <div class="blog-post-meta">
-                                                    <i class="icon-bubble font-blue"></i>
-                                                    <a href="javascript:">{{count($post->comments)}}</a>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <img  src="public/uploads/{{ $post->cover_image}}" style="object-fit: contain; " >
+                                    </a>
                                 </div>
-                                @endforeach
-                            </div>
-
-
+                                <div class="blog-post-content">
+                                    <h2 class="blog-title blog-post-title">
+                                        <a href="{{route('home.show',$post->id)}}">{{$post->title}}</a>
+                                    </h2>
+                                    <p class="blog-post-desc">{!! $post->description !!}</p>
+                                    <div class="blog-post-foot">
+                                        <div class="blog-post-meta">
+                                            <i class="icon-calendar font-blue"></i>
+                                            @isset($post->updated_at)
+                                            {{ $post->updated_at->format('d/m/Y') }}
+                                            @endisset
+                                        </div>
+                                        <div class="blog-post-meta">
+                                            <i class="icon-bubble font-blue"></i>
+                                            <a href="javascript:">{{count($post->comments)}}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                            </a>
+                        </div>
+                        @endforeach
+                    </div>
                 </div>
-                <!-- END PAGE BASE CONTENT -->
-            </div>
+
+        </div>
             <!-- END CONTENT BODY -->
         </div>
         <!-- END CONTENT -->

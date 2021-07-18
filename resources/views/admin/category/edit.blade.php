@@ -43,7 +43,7 @@
                                     <div class="form-group">
                                         <label>Category name</label>
                                         <div class="input-icon">
-                                            <i class="fa font-green"></i>
+                                            <i class="fa fa-pencil" aria-hidden="true"></i>
                                             <input type="text" class="form-control" name="name" value="{{$category->name}}">
                                             @error('name')
                                             <div class="alert alert-danger alert-dismissible" role="alert">

@@ -93,6 +93,7 @@ class CommentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Comments::withTrashed()->where('id', $id)->delete();
+        return redirect()->back()->with('success', 'Delete Comment Successfully!');
     }
 }

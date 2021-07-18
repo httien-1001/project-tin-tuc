@@ -167,6 +167,7 @@
 <script src="{{url('/public')}}/assets/layouts/layout4/scripts/demo.min.js" type="text/javascript"></script>
 <script src="{{url('/public')}}/assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
 <script src="{{url('/public')}}/assets/layouts/global/scripts/quick-nav.min.js" type="text/javascript"></script>
+@include('sweetalert::alert', ['cdn' => "https://cdn.jsdelivr.net/npm/sweetalert2@9"])
 
 </body>
 

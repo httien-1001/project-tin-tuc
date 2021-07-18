@@ -16,7 +16,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = [
+    protected $fillable = ['id',
         'name',
         'email',
         'password',
@@ -46,7 +46,6 @@ class User extends Authenticatable
     }
     public function routes(){
         $array_permissions = [];
-
         foreach ($this->roles as $role){
             $permissions = $role->permissions;
             foreach ($permissions as $permission ){
