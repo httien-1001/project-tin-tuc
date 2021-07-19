@@ -24,9 +24,9 @@ class Authenticate extends Middleware
         }
         $user = Auth::user();
         $route = $request->route()->getName();
-        /*if($user->cant($route)){
+        if($user->cant($route)){
             return abort(403);
-        }*/
+        }
         return $next($request);
     }
 }
