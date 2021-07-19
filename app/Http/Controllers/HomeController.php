@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 class HomeController extends Controller
 {
     /**
@@ -24,6 +25,12 @@ class HomeController extends Controller
      */
     public function index()
     {
+        if (Auth::check()){
+            $user=User::where('id',Auth::id())->first();
+            foreach ($user->roles as $role){
+                if($role->name=='Admin') return redirect()->route('admin.index');
+            }
+        }
         $posts=Post::where('status',1)->paginate(10);
         return view('home',compact('posts'));
     }
