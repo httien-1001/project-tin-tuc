@@ -17,6 +17,7 @@ class CreateUserRoleTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->integer('role_id')->unsigned();
             $table->primary(['user_id','role_id']);
+            $table->timestamps();
         });
         Schema::table('users_roles', function($table) {
             $table->foreign('user_id')->references('id')->on('users');
