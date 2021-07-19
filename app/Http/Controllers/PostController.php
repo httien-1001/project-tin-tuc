@@ -156,10 +156,7 @@ class PostController extends Controller
             'status'=> $request->status,
         ]);
         if($flag || $flag_1){
-            return redirect()->route('admin.post.index')->with('toast_success', 'Update Post Successfully!');
-        } else {
-            return redirect()->route('admin.post.index')->with('toast_success', 'Error Occurs');
-
+            return redirect()->route('admin.post.index')->with('success', 'Update Post Successfully!');
         }
     }
 
