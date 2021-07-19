@@ -208,6 +208,6 @@
 <script src="https://cdn.ckeditor.com/4.16.1/standard/ckeditor.js"></script>
 
 @include('sweetalert::alert', ['cdn' => "https://cdn.jsdelivr.net/npm/sweetalert2@9"])
-
+@yield('js')
 </body>
 </html>
