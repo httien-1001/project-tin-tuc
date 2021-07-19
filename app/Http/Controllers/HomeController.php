@@ -28,7 +28,12 @@ class HomeController extends Controller
         if (Auth::check()){
             $user=User::where('id',Auth::id())->first();
             foreach ($user->roles as $role){
-                if($role->name=='Admin') return redirect()->route('admin.index');
+                foreach($role->permissions as $permission){
+                    if($permission->id==6){
+                        return redirect()->route('admin.index');
+                    }
+                }
+
             }
         }
         $posts=Post::where('status',1)->paginate(10);

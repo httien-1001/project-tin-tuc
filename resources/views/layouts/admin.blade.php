@@ -118,13 +118,13 @@
                     <?php $menus = config('menu'); ?>
                     <ul class="sub-menu">
                         @foreach($menus as $menu)
-{{--                            @if(Auth::user()->can($menu['route']))--}}
+                            @if(Auth::user()->can($menu['route']))
                             <li class="nav-item start ">
                                 <a class="nav-link" href="{{route($menu['route'])}}">
                                     <span class="">{{$menu['label']}}</span>
                                 </a>
                             </li>
-{{--                            @endif--}}
+                            @endif
                         @endforeach
                     </ul>
                 </li>

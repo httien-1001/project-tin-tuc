@@ -78,7 +78,7 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        $already_permissions = PermissionRole::where('role_id',$id)->pluck('permissions_id')->toArray();
+        $already_permissions = PermissionRole::where('role_id',$id)->pluck('permission_id')->toArray();
         $role=Role::where('id',$id)->first();
         $permissions = Permission::all();
         return view('admin.role.edit',compact('role','permissions', 'already_permissions'));
