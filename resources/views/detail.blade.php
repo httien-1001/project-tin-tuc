@@ -42,13 +42,15 @@
                             </div>
                             <div class="blog-comments">
                                 <h3 class="sbold blog-comments-title">{{count($detail->comments)}}  Comments</h3>
-                                @foreach($detail->comments as $cmt)
                                 <div class="c-comment-list">
                                     <div class="media">
+                                    @foreach($detail->comments as $cmt)
                                         <div class="media-left">
-                                            <a href="#">
-                                                <img class="media-object" alt="" src=""> </a>
+                                                @isset($cmt->commenter->cover_image)
+                                                <img class="media-object" src="../public/uploads/{{ $cmt->commenter->cover_image}}" >
+                                                @endif
                                         </div>
+                                        
                                         <div class="media-body">
                                             <h4 class="media-heading">
                                                 <a >{{$cmt->commenter->name}}</a> on <span class="c-date">{{$cmt->created_at->format('d/m/Y')}}</span>
@@ -56,19 +58,20 @@
                                             {{$cmt->content}}
                                             <span class="pull-right">@if(Auth::id()==$cmt->commenter->id)
                                                     <form action="{{route('customer.comment.destroy',['comment'=>$cmt->id])}}" class="form" method="post">
-                                                                                @csrf
+                                                        @csrf
                                                         @method('delete')
-                                                                                <button type="submit"class="btn btn-default">
-                                                                                    <span style="font-size: 12px">Delete</span>
-                                                                                </button>
-                                                                            </form>
+                                                            <button type="submit"class="btn btn-default">
+                                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                                            </button>
+                                                    </form>
                                                 @endif
                                             </span>
 
                                         </div>
+                                     @endforeach
                                     </div>
                                 </div>
-                                @endforeach
+                               
                                 @guest
                                     <span>Please <a href="{{route('login')}}">login</a> to leave your comment</span>
 
