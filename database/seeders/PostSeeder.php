@@ -13,6 +13,7 @@ class PostSeeder extends Seeder
      */
     public function run()
     {
+<<<<<<< Updated upstream
         \DB::table('posts')->insert([
             'user_id' => 1,
             'category_id' =>1,
@@ -22,5 +23,8 @@ class PostSeeder extends Seeder
             'content' =>'Demo content for post 1',
             'cover_image' =>'demo.png',
         ]);
+=======
+        
+>>>>>>> Stashed changes
     }
 }

@@ -43,11 +43,15 @@
 <div class="page-header navbar navbar-fixed-top">
     <!-- BEGIN HEADER INNER -->
     <div class="page-header-inner ">
-        <!-- BEGIN LOGO -->
-        <div class="page-logo">
-
-        </div>
-        <!-- END LOGO -->
+       <!-- BEGIN LOGO -->
+       <div class="page-logo">
+                    <a href="{{route('home')}}">
+                        <img src="../assets/layouts/layout4/img/logo-light.png" alt="logo" class="logo-default" /> </a>
+                    <div class="menu-toggler sidebar-toggler">
+                        <!-- DOC: Remove the above "hide" to enable the sidebar toggler button on header -->
+                    </div>
+                </div>
+                <!-- END LOGO -->
         <!-- BEGIN RESPONSIVE MENU TOGGLER -->
         <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse"> </a>
         <!-- END RESPONSIVE MENU TOGGLER -->
@@ -60,7 +64,7 @@
                     <i class="fa fa-angle-down"></i>
                 </button>
                 <ul class="dropdown-menu" role="menu">
-                    @guest
+                     @guest
                         @if (Route::has('login') || Route::has('register'))
                             <li>
                                 <a href="{{ route('login') }}">

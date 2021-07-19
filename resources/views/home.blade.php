@@ -17,16 +17,20 @@
                         <ul class="sub-menu">
                             <li class="nav-item start ">
                                 <a href="{{route('customer.profile.index')}}" class="nav-link ">
+<<<<<<< Updated upstream
                                     <i class="icon-bar-chart"></i>
                                     <span class="title">Profile</span>
                                 </a>
                             </li>
                             <li class="nav-item start ">
                                 <a href="{{route('customer.profile.show',Auth::id())}}" class="nav-link ">
+=======
+>>>>>>> Stashed changes
                                     <i class="icon-bar-chart"></i>
                                     <span class="title">Comment</span>
                                 </a>
                             </li>
+                        
                         </ul>
                     </li>
                 </ul>
@@ -46,6 +50,7 @@
                 <!-- END PAGE BREADCRUMB -->
                 <!-- BEGIN PAGE BASE CONTENT -->
                 <div class="blog-page blog-content-1">
+<<<<<<< Updated upstream
 
                             <div class="row">
                                 @foreach($posts as $post)
@@ -593,60 +598,48 @@
                                                 </div>
                                                 <div class="cont-col2">
                                                     <div class="desc"> IPO Report for year 2013 has been released. </div>
+=======
+
+                            <div class="row">
+                                @foreach($posts as $post)
+                                <div class="col-sm-6">
+                                    <a href="{{route('home.show',$post->id)}}">
+                                    <div class="blog-post-sm bordered blog-container">
+                                        <div class="blog-img-thumb">
+                                            <a href="{{route('home.show',$post->id)}}">
+                                                <img  src="public/uploads/{{ $post->cover_image}}" style="object-fit: contain; min-height: 300px" >
+                                            </a>
+                                        </div>
+                                        <div class="blog-post-content">
+                                            <h2 class="blog-title blog-post-title">
+                                                <a href="{{route('home.show',$post->id)}}">{{$post->title}}</a>
+                                            </h2>
+                                            <p class="blog-post-desc">{{$post->description}}</p>
+                                            <div class="blog-post-foot">
+                                                <div class="blog-post-meta">
+                                                    <i class="icon-calendar font-blue"></i>
+                                                    @isset($post->updated_at)
+                                                    {{ $post->updated_at->format('d/m/Y') }}
+                                                    @endisset
+                                                </div>
+                                                <div class="blog-post-meta">
+                                                    <i class="icon-bubble font-blue"></i>
+                                                    <a href="javascript:">{{count($post->comments)}}</a>
+>>>>>>> Stashed changes
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col2">
-                                            <div class="date"> 20 mins </div>
-                                        </div>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="tab-pane page-quick-sidebar-settings" id="quick_sidebar_tab_3">
-                        <div class="page-quick-sidebar-settings-list">
-                            <h3 class="list-heading">General Settings</h3>
-                            <ul class="list-items borderless">
-                                <li> Enable Notifications
-                                    <input type="checkbox" class="make-switch" checked data-size="small" data-on-color="success" data-on-text="ON" data-off-color="default" data-off-text="OFF"> </li>
-                                <li> Allow Tracking
-                                    <input type="checkbox" class="make-switch" data-size="small" data-on-color="info" data-on-text="ON" data-off-color="default" data-off-text="OFF"> </li>
-                                <li> Log Errors
-                                    <input type="checkbox" class="make-switch" checked data-size="small" data-on-color="danger" data-on-text="ON" data-off-color="default" data-off-text="OFF"> </li>
-                                <li> Auto Sumbit Issues
-                                    <input type="checkbox" class="make-switch" data-size="small" data-on-color="warning" data-on-text="ON" data-off-color="default" data-off-text="OFF"> </li>
-                                <li> Enable SMS Alerts
-                                    <input type="checkbox" class="make-switch" checked data-size="small" data-on-color="success" data-on-text="ON" data-off-color="default" data-off-text="OFF"> </li>
-                            </ul>
-                            <h3 class="list-heading">System Settings</h3>
-                            <ul class="list-items borderless">
-                                <li> Security Level
-                                    <select class="form-control input-inline input-sm input-small">
-                                        <option value="1">Normal</option>
-                                        <option value="2" selected>Medium</option>
-                                        <option value="e">High</option>
-                                    </select>
-                                </li>
-                                <li> Failed Email Attempts
-                                    <input class="form-control input-inline input-sm input-small" value="5" /> </li>
-                                <li> Secondary SMTP Port
-                                    <input class="form-control input-inline input-sm input-small" value="3560" /> </li>
-                                <li> Notify On System Error
-                                    <input type="checkbox" class="make-switch" checked data-size="small" data-on-color="danger" data-on-text="ON" data-off-color="default" data-off-text="OFF"> </li>
-                                <li> Notify On SMTP Error
-                                    <input type="checkbox" class="make-switch" checked data-size="small" data-on-color="warning" data-on-text="ON" data-off-color="default" data-off-text="OFF"> </li>
-                            </ul>
-                            <div class="inner-content">
-                                <button class="btn btn-success">
-                                    <i class="icon-settings"></i> Save Changes</button>
+                                </div>
+                                @endforeach
                             </div>
-                        </div>
-                    </div>
+
+
                 </div>
+                <!-- END PAGE BASE CONTENT -->
             </div>
+            <!-- END CONTENT BODY -->
         </div>
-        <!-- END QUICK SIDEBAR -->
+        <!-- END CONTENT -->
     </div>
     <!-- END CONTAINER -->
 @endsection
