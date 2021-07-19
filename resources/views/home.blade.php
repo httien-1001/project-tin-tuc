@@ -21,13 +21,7 @@
                                     <span class="title">Profile</span>
                                 </a>
                             </li>
-                            <li class="nav-item start ">
-                                <a href="{{route('customer.profile.show',Auth::id())}}" class="nav-link ">
-                                    <i class="icon-bar-chart"></i>
-                                    <span class="title">Comment</span>
-                                </a>
-                            </li>
-                        
+                            
                         </ul>
                     </li>
                 </ul>
