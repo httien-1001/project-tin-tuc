@@ -36,7 +36,7 @@
                             </div>
                         </div>
                         <div class="portlet-body form">
-                            <form role="form"  method="POST" action="{{route('admin.post.store')}}" enctype="multipart/form-data">
+                            <form role="form"  method="POST" action="{{route('admin.post.store')}}" enctype="multipart/form-data" runat="server">
                                 @csrf
                                 <input type="hidden" class="form-control" name="user_id" value="{{Auth::id()}}">
                                 <div class="form-body">
@@ -55,12 +55,13 @@
                                             <label>Image</label>
                                             <div class="input-icon">
                                                 <i class="fa font-green"></i>
-                                                <input type="file" class="form-control" name="profile_image" value="{{old('profile_image')}}">
+                                                <input type="file" class="form-control" name="profile_image" value="{{old('profile_image')}}" id="imgInp">
                                                 @error('profile_image')
                                                 <div class="alert alert-danger alert-dismissible" role="alert">
                                                     {{$message }}
                                                 </div>
                                                 @enderror
+                                                <img class="mt-2" id="blah" src="#" alt="" width="200px"/>
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -139,6 +140,18 @@
     <script>
         CKEDITOR.replace('ckeditor1');
         CKEDITOR.replace('ckeditor2');
+        $("#imgInp").change(function(){
+            readURL(this);
+        });
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#blah').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
     </script>
 @endsection
 

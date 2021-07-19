@@ -134,7 +134,7 @@
                             </div>
                         </div>
                         <div class="portlet-body form">
-                            <form role="form"  method="POST" action="{{route('customer.profile.store')}}" enctype="multipart/form-data">
+                            <form role="form"  method="POST" action="{{route('customer.profile.store')}}" enctype="multipart/form-data"  runat="server">
                                 @csrf
                                 <input type="hidden" class="form-control" name="user_id" value="{{$user->id}}">
                                 <div class="form-body">
@@ -150,12 +150,13 @@
                                         <label>Edit profile picture</label>
                                         <div class="input-icon">
                                             <i class="fas fa-pencil-alt"></i>
-                                            <input type="file" class="form-control" name="profile_image" >
+                                            <input type="file" class="form-control" name="profile_image"  id="imgInp" >
                                             @error('profile_image')
                                             <div class="alert alert-danger alert-dismissible" role="alert">
                                                 {{$message }}
                                             </div>
                                             @enderror
+                                            <img class="mt-2" id="blah" src="#" alt="" width="100px"/>
                                         </div>
                                     </div>
                                     <div class="form-actions">
@@ -176,4 +177,23 @@
         <!-- END CONTENT BODY -->
     </div>
     </div>
+@endsection
+@section('js')
+<script>
+    $("#imgInp").change(function(){
+        readURL(this);
+    });
+    function readURL(input) {
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#blah').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
 @endsection
