@@ -80,7 +80,7 @@ class PerSeeder extends Seeder
         ]);
         \DB::table('permissions')->insert([
             'full_name' => 'View edit post form',
-            'route_name' =>'admin.post.update',
+            'route_name' =>'admin.post.edit',
         ]);
         \DB::table('permissions')->insert([
             'full_name' => 'Update post',
